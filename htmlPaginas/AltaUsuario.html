@@ -1,0 +1,113 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/interfaz.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <title>Inicio a Sesión</title>
+  </head>
+  <div class="fondo container-fluid vh-100 d-flex flex-column p-0 overflow-hidden">
+    <!-- ENCABEZADO -->
+    <header class="row g-0 py-3 flex-shrink-0">
+      <div class="col-4" style="display: flex;">
+        <h2>Usuario:</h2>
+        <h2>"nombre"</h2>
+      </div>
+    <div class="col-4 d-flex justify-content-center align-items-center"><h2>Agregar Usuario </h2></div>
+       <div class="col-4">
+         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    Opciones
+  </button>
+
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+     <li><a class="dropdown-item" href="">Cerrar sesión</a></li>
+      <li><a class="dropdown-item" href="#">Menu principal</a></li>
+
+      <!--PANEL DE CONTROL DE EMPLEADO-->
+
+  </ul>
+
+
+
+      </div>
+      <section class="Separa"></section>
+    </header>
+
+    <!-- CONTENEDOR INFERIOR -->
+    <div class="d-flex flex-grow-1 overflow-hidden" style="min-height: 0;">
+      <!-- MENÚ LATERAL -->
+      <ul class="overflow-auto nav flex-column h-100 w-25 flex-shrink-0 p-0">
+        <li class="nav-item border "><a class="nav-link active" href="#">Citas</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Ventas</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Membresias</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Animales</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Clientes</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Alertas</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Empleados</a></li>
+
+             </ul>
+             <section class="Separa"></section>
+
+    <!--FALTA EMPLREADOS, ES NECESARIO LA VALIDACIÓN DE SERVIDOR-->
+
+      <!-- DIV VERDE CON SCROLL VERTICAL Y HORIZONTAL -->
+       <form class="overflow-auto" action="">
+      <main class="row flex-grow-1 h-100 align-content-start">
+    <section class="col-6 mb-3">
+      <label for="Ci" class="form-label">Ci</label>
+      <input type="number" class="form-control" id="Ci" placeholder="Ej: 56573322" >
+    </section>
+
+    <section class="col-6 mb-3">
+      <label for="Gmail" class="form-label">Gmail</label>
+      <input type="email" class="form-control" id="Gmail" placeholder="Ej: papas@gmail.com">
+    </section>
+
+      <section class="col-6 mb-3">
+      <label for="Nombre" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="Nombre" placeholder="">
+    </section>
+
+      <section class="col-6 mb-3">
+      <label for="Apellido" class="form-label">Apellido</label>
+      <input type="text" class="form-control" id="Apellido" placeholder="">
+    </section>
+
+      <section class="col-6 mb-3">
+      <label for="Numero" class="form-label">Telefono</label>
+      <input type="number" class="form-control" id="Numero" placeholder="Ej: 093899890">
+    </section>
+
+    <section class="col-6 mb-3">
+      <label for="Direccion" class="form-label">Dirección</label>
+      <input type="text" class="form-control" id="Direccion" placeholder="Santana 654">
+    </section>
+
+        <section class="col-6 mb-3">
+        <label for="" class="form-label">Rol</label>
+        <select name="*" id="" class="form-select">
+          <option value="Empleado">Empleado</option>
+          <option value="Usuario">usuario</option>
+          <option value="Administrador">Administrador</option>
+        </select>
+        </section>
+          <section class="col-12 mb-6">
+        <input class="btn btn-secondary mb-3" type="reset" value="Resetear valores">
+        </section>
+         <section class="col-12">
+        <input class="btn btn-success mb-3" type="submit" value="Enviar cambios">
+        </section>
+        <section class="col-6 mb-6">
+       <a href="#" class="btn btn-danger" role="button">Salir</a>
+        </section>
+
+
+
+
+    </main>
+    </form>
+    </div>
+  </div>
+  </html>

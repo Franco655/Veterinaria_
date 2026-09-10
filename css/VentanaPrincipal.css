@@ -1,0 +1,114 @@
+body{
+
+background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100%;
+}
+a{
+text-align: center;
+}
+.texto-bajo{
+color: rgb(238, 238, 242);
+text-align: center;
+}
+
+
+
+footer{
+background-color: rgb(238, 238, 238);
+}
+
+/* Quitamos los márgenes del navegador */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+/* NAV */
+.navbar-custom {
+    width: 100%;
+    min-height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    background-color: white;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+
+    box-sizing: border-box;
+}
+
+/* Enlaces */
+.nav-item {
+    flex: 1;
+
+    text-align: center;
+
+    padding: 22px 10px;
+
+    text-decoration: none;
+    color: #222;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+/* Efecto al pasar el mouse */
+.nav-item:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+}
+
+
+/* 📱 Pantallas pequeñas */
+@media (max-width: 600px) {
+
+    .navbar-custom {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-item {
+        padding: 15px;
+    }
+
+}
+/* From Uiverse.io by adamgiebl */
+.button{
+  position: relative;
+  display: inline-block;
+  margin: 15px;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #725AC1;
+  background: transparent;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  border: 2px solid #725AC1;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 0 #725AC1;
+}
+
+button:hover {
+  color: white;
+  box-shadow: inset 0 -100px 0 0 #725AC1;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+.Icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain; /* Evita que la imagen se deforme */
+    display: flex;
+}

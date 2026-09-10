@@ -1,0 +1,60 @@
+.buscador {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+
+}
+
+ul {
+      list-style: none;
+      padding: 0;
+      width: 250px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    li {
+      position: relative;
+      text-align: center;
+      margin-bottom: 8px;
+
+      color: #655151;
+      cursor: pointer;
+      overflow: hidden; /* Necesario para contener la barra animada */
+
+      /* Transiciones suaves */
+      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Pseudo-elemento para el indicador lateral oculto */
+    li::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: #f9fcff;
+      transform: scaleY(0); /* Oculto por defecto */
+      transition: transform 0.3s ease;
+    }
+
+    /* EFECTO HOVER */
+    li:hover {
+      background-color: #ffffff;
+      color: #c5c8cb;
+      transform: translateY(-3px) translateX(4px); /* Se eleva y mueve un poco a la derecha */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+    }
+
+    /* Muestra la barra lateral al hacer hover */
+    li:hover::before {
+      transform: scaleY(1);
+    }
+    .Separa{
+    padding: 0.5%;
+    background-color: rgb(143, 151, 151);
+    }
+    .fondo{
+    background-color: #282626;
+    color: #ffffff;
+    }

@@ -1,0 +1,72 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/interfaz.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <title>Inicio a Sesión</title>
+  </head>
+  <div class="fondo container-fluid vh-100 d-flex flex-column p-0 overflow-hidden">
+    <!-- ENCABEZADO -->
+    <header class="row">
+      <section class="col-4">
+        <h2>usuario</h2>
+      </section>
+    <div class="col-4 col d-flex justify-content-center align-items-center"><h2>Usuarios</h2></div>
+       <div class="col-4">
+         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    Opciones
+  </button>
+
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+     <li><a class="dropdown-item" href="">Cerrar sesión</a></li>
+      <li><a class="dropdown-item" href="#">Menu principal</a></li>
+
+      <!--PANEL DE CONTROL DE EMPLEADO-->
+
+  </ul>
+      </div>
+        <section  class="col-4"></section>
+         <section  class="col-4">
+          <section class="row">
+  <section class="mt-button col">
+<section class="buscador">
+      <form action="/buscar" method="GET">
+  <input type="search" name="q" placeholder="Buscar..." required>
+  <button type="submit">Buscar</button>
+</form>
+</section>
+</section>
+</section>
+         </section>
+         <section  class="col-4"><input class="btn btn-success mb-3" type="submit" value="Agregar Usuario">
+        </section>
+ <section class="Separa"></section>
+
+
+    </header>
+
+    <!-- CONTENEDOR INFERIOR -->
+    <div class="d-flex flex-grow-1 overflow-hidden">
+      <!-- MENÚ LATERAL -->
+      <ul class="sidebar-nav nav flex-column h-100 w-25 flex-shrink-0 p-0">
+  <li class="nav-item"><a class="nav-link" href="#">Citas</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Ventas</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Membresías</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Animales</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Clientes</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Alertas</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Usuarios</a></li>
+</ul>
+<section class="Separa"></section>
+<!--FALTA EMPLREADOS, ES NECESARIO LA VALIDACIÓN DE SERVIDOR-->
+
+      <!-- DIV VERDE CON SCROLL VERTICAL Y HORIZONTAL -->
+      <main class="h-100 overflow-auto">
+ffff
+    </main>
+    </div>
+  </div>
+  </html>
