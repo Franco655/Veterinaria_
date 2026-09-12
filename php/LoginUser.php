@@ -11,9 +11,12 @@ class LoginUser
         $this->username = $username;
         $this->hashpassword = $hashpassword;
     }
+
+
     public function AltaLoginvalidar(string $username, string $password): bool
     {
         $conectar = new Conexion();
+        //el passord se resalta en azul porque el el editor lo detecta como una función
         $sqlquery = "SELECT mail, password FROM login WHERE mail= :username";
         $statement = $conectar->establecer_conexion()->prepare($sqlquery);
         $statement->execute([":username" => $username]);
@@ -55,6 +58,3 @@ class LoginUser
         $this->hashpassword = strtolower(trim($hashpassword));
     }
 }
-
-
-//HTML

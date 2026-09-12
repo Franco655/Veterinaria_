@@ -3,7 +3,7 @@
 class Conexion
 {
 
-    private $dsn = "mysql:host=localhost;dbname=php;charset=utf8mb4";
+    private $dsn = "mysql:host=localhost;dbname=veterinaria;charset=utf8mb4";
     private $usuarioDb = "root";
     private $passwordDb = "";
     private ?PDO $pdo = null;

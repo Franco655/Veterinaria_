@@ -1,18 +1,35 @@
-form{
-background-color: rgba(117, 100, 48, 0.6); /* Negro con 50% de transparencia */
-margin-left: 20%;
-margin-right: 20%;
-margin-top: 10%;
-padding: 5%;
-border-radius: 10%;
-border: 4px inset hsl(0, 24%, 86%);
-background-color: rgba(255, 255, 255, 0.5);
+form {
+    /* Elimina margin-left, margin-right y margin-top */
+    margin: 0;
+ font-family: 'Inter', sans-serif;
+    padding: 5%;
+    border-radius: 20px; /* Consejo: usa px en lugar de % para border-radius */
+    width: 40%;
+    height: 30%;
+    background-color: rgba(226, 215, 215, 0.796);
 }
-body{
-background-image: url("../archivos.img/Gato.jpg");
-background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+
+body {
+
+    background-image: url("../archivos.img/FondoPatas.jpg");
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
     min-height: 100vh;
     width: 100%;
+    margin: 0;               /* Quita márgenes por defecto del navegador */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+h1{
+text-align: center;
+
+}
+img {
+  display: block;        /* Convierte la imagen en bloque para que acepte márgenes */
+  margin-left: auto;     /* Empuja la imagen desde la izquierda al centro */
+  margin-right: auto;    /* Empuja la imagen desde la derecha al centro */
+  max-width: 40%;        /* Tu tamaño corregido sin el doble punto y coma */
+  height: auto;          /* Mantiene la proporción */
 }

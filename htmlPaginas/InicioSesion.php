@@ -1,17 +1,17 @@
   <?php
-  require_once "./Veterinaria/php/LoginUser.php";
+  //INICIA el arreglo SESSION para mantenerlo
+  session_start();
+  require_once "../php/LogicaUsuario.php";
   if (isset($_POST['boton'])) {
-    $username = ($_POST['username']);
+    $email = ($_POST['email']);
     $pass = ($_POST['pass']);
 
-    $resultado = (new LoginUser())->validar($username, $pass);
+    $resultado = (new LoginUser())->AltaLoginvalidar($email, $pass);
 
     if ($resultado == true) {
-      //INICIA el arreglo SESSION para mantenerlo
-      session_start();
       $respuesta = "ingresaste correctamente";
       //UNA COOKIE QUE GUARDA LA INFORMACIÓN
-      $_SESSION["username"] = $username;
+      $_SESSION["username"] = $email;
       header("Location: index.php");
     } else {
       $respuesta = "Error al ingresar";
