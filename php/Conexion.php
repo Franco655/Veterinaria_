@@ -10,7 +10,6 @@ class Conexion
     public function establecer_conexion(): PDO
     {
         if ($this->pdo !== null) {
-            echo "Conexion ya establecida\n";
             return $this->pdo;
         }
         try {
@@ -19,7 +18,6 @@ class Conexion
                 $this->usuarioDb,
                 $this->passwordDb
             );
-            echo "Conexión establecida por primera vez\n";
             return $this->pdo;
         } catch (PDOException $e) {
             throw new PDOException(

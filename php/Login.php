@@ -1,6 +1,6 @@
 <?php
 require_once 'Conexion.php';
-class LoginUser
+class Login
 {
 
     private ?string $username;
@@ -13,7 +13,27 @@ class LoginUser
     }
 
 
-    public function AltaLoginvalidar(string $username, string $password): bool
+    public function AltaLogin(int $Ci)
+    {
+        $conectar = new Conexion();
+            $this->hashpassword = password_hash($this->hashpassword, PASSWORD_DEFAULT);
+            $sqlinsert = "INSERT INTO login VALUES (?,?,?)";
+            $statement = $conectar->establecer_conexion()->prepare($sqlinsert);
+            if ($statement->execute([
+                $this->username,
+            $this->hashpassword,
+            $Ci
+            ]))
+            {
+
+                return true;
+            } else {
+            }
+        }
+
+
+/*
+     public function AltaLogin(): bool
     {
         $conectar = new Conexion();
         //el passord se resalta en azul porque el el editor lo detecta como una función
@@ -37,6 +57,7 @@ class LoginUser
         }
         return false;
     }
+*/
 
     //GETTERS
     public function getUsername(): string

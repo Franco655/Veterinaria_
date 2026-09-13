@@ -1,5 +1,25 @@
+<?php
+require_once "../php/LogicaUsuario.php";
+require_once "../php/Login.php";
+  //INICIA el arreglo SESSION para mantenerlo
+  session_start();
+  if (isset($_POST['boton'])) {
+    $rol="Usuario";
+    $Ci=($_POST['Ci']);
+    $Nombre=($_POST['Nombre']);
+    $Apellido = ($_POST['Apellido']);
+    $Mail=($_POST['Mail']);
+    $Direccion=($_POST['Direccion']);
+    $Telefono=($_POST['Telefono']);
+    $UsserName=($_POST['NombreDeUsuario']);
+    $Contrasena=($_POST['Contrasena']);
 
-
+    $Usuario= new Usuario($Ci,$Nombre,$Apellido, $Mail,$Direccion, $Telefono, $rol);
+    $Usuario->AltaUsuario();
+    $login= new login($UsserName, $Contrasena);
+    $login->AltaLogin($Usuario->getCi());
+  }
+  ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,11 +56,15 @@
       </div>
       <div class="col-6">
         <label for="InputTel" class="form-label">Telefóno</label>
-        <input name="Telefóno" type="text" class="form-control" id="InputTel">
+        <input name="Telefono" type="text" class="form-control" id="InputTel">
       </div>
       <div class="col-6">
         <label for="InpuCi" class="form-label">Cedula</label>
         <input name="Ci" type="number" class="form-control" id="InputCi">
+      </div>
+      <div class="col-6">
+        <label for="InputDireccion" class="form-label">Dirección</label>
+        <input name="Direccion" type="text" class="form-control" id="InputDireccion">
       </div>
       <div class="col-12">
       <h3>Información de Usuario</h3>
@@ -51,18 +75,13 @@
       </div>
        <div class="col-6">
         <label for="InputContrasena" class="form-label">Contraseña</label>
-        <input name="pass" type="password" class="form-control" id="InputContrasena">
+        <input name="Contrasena" type="password" class="form-control" id="InputContrasena">
       </div>
 
 
 
         <div class="col-12">
-        <button type="submit" class="btn btn-primary">registrarse</button>
-      </div>
-              <div class="col-12">
-        <button type="submit" class="btn btn-danger">Cancelar</button>
-
-
+        <button  name="boton" type="submit" class="btn btn-primary">registrarse</button>
       </div>
       <div class="col-12">
                 <input class="btn btn-secondary" type="reset" value="Resetear valores">
@@ -70,19 +89,6 @@
     </main>
   </form>
 
-
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="..." class="rounded me-2" alt="...">
-      <strong class="me-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
-    </div>
-  </div>
 </div>
 </body>
 
