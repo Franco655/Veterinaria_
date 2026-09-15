@@ -1,21 +1,30 @@
   <?php
   //INICIA el arreglo SESSION para mantenerlo
   session_start();
-  require_once "../php/LogicaUsuario.php";
+  require_once "../php/Login.php";
+  $Nombre ="";
+  $Contraseña="";
+  $resultado =false;
   if (isset($_POST['boton'])) {
-    $email = ($_POST['email']);
-    $pass = ($_POST['pass']);
+    $Nombre = ($_POST['Nombre']);
+    $Contraseña = ($_POST['Contrasena']);
 
-    $resultado = (new LoginUser())->AltaLoginvalidar($email, $pass);
+    $resultado = (new Login($Nombre, $Contraseña))->Validar();
+
 
     if ($resultado == true) {
-      $respuesta = "ingresaste correctamente";
-      //UNA COOKIE QUE GUARDA LA INFORMACIÓN
-      $_SESSION["username"] = $email;
-      header("Location: index.php");
-    } else {
-      $respuesta = "Error al ingresar";
-    }
+    // UNA COOKIE QUE GUARDA LA INFORMACIÓN
+    // Nota: $_SESSION no es una cookie, es una sesión. Asegúrate de tener session_start(); al inicio del archivo.
+    $_SESSION["Nombre"] = $Nombre;
+    header("Location: https://google.com");
+    exit();
+} else {
+    // CORREGIDO: Se añadió "Location: "
+    //header("Location: https://es.wikipedia.org/wiki/Anime");
+    exit();
+}
+
+
   }
   ?>
   <!DOCTYPE html>
@@ -40,20 +49,20 @@
         </section>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">
-            <h4>Email</h4>
+            <h4>Nombre de usuario</h4>
           </label>
-          <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <input name="Nombre" type="text" class="form-control" id="exampleInputEmail1">
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">
             <h4>Contraseña</h4>
           </label>
-          <input name="pass" type="password" class="form-control" id="exampleInputPassword1">
+          <input name="Contrasena" type="password" class="form-control" id="exampleInputPassword1">
         </div>
         <button name="boton" type="submit" class="btn btn-primary">Iniciar sesión</button>
         <p>
         <h4>¿No tienes cuenta?</h4><a href="Registrarse.html" class="create-account">Crea una</a></p>
-
+        <p> <?php echo $resultado  ?></p>
       </form>
     </main>
 

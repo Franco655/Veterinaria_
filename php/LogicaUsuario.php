@@ -21,26 +21,35 @@ public function __construct(int $Ci,string $Nombre, string $Apellido,string $Mai
 }
 
 
-function AltaUsuario()
+public function AltaUsuario(): bool
 {
     $conn = new Conexion();
-   $sql = "INSERT INTO usuario VALUES (?, ?, ?, ?,?,?,?)";
-    $consulta = $conn->establecer_conexion()->prepare($sql);
-    $success = $consulta->execute([
-        $this->Ci,
-        $this->Nombre,
-        $this->Apellido,
-        $this->Direccion,
-        $this->Mail,
-        $this->Telefono,
-        $this->Rol
-    ]);
+    $sql = "INSERT INTO usuario VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    if ($success) {
-    } else {
-        echo "algo salio malo";
+    try {
+        $consulta = $conn->establecer_conexion()->prepare($sql);
+        $success = $consulta->execute([
+            $this->Ci,
+            $this->Nombre,
+            $this->Apellido,
+            $this->Direccion,
+            $this->Mail,
+            $this->Telefono,
+            $this->Rol
+        ]);
+
+        return true;
+
+    } catch (\PDOException $e) {
+        // El código 1062 es el de duplicado
+        if ($e->errorInfo[1] == 1062) {
+            return false;
+        } else {
+        }
+        return false;
     }
 }
+
 
 
 

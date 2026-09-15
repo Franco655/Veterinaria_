@@ -29,35 +29,28 @@ class Login
                 return true;
             } else {
             }
+
         }
 
 
-/*
-     public function AltaLogin(): bool
+
+     public function Validar(): bool
     {
         $conectar = new Conexion();
         //el passord se resalta en azul porque el el editor lo detecta como una función
-        $sqlquery = "SELECT mail, password FROM login WHERE mail= :username";
+        $sqlquery = "SELECT NombreDeUsuario, Contraseña FROM login WHERE NombreDeUsuario= ?";
         $statement = $conectar->establecer_conexion()->prepare($sqlquery);
-        $statement->execute([":username" => $username]);
+        $statement->execute([$this->username]);
         $usuarioEncontrado = $statement->fetch();
 
-        if ($usuarioEncontrado == false) {
-            $this->hashpassword = password_hash($this->hashpassword, PASSWORD_DEFAULT);
-            $sqlinsert = "INSERT INTO login VALUES (?, ?)";
-            $statement = $conectar->establecer_conexion()->prepare($sqlinsert);
-            if ($statement->execute([$this->username, $this->hashpassword])) {
-                echo "usuario registrado \n";
+        if ($usuarioEncontrado == true) {
+            if(password_verify($this->hashpassword, $usuarioEncontrado["Contraseña"])){
                 return true;
-            } else {
-                echo "algo salio mal al registrar el usuario \n";
             }
-        } else {
-            echo "el usuario existe, debes elegir otro nombre \n";
         }
         return false;
     }
-*/
+
 
     //GETTERS
     public function getUsername(): string
