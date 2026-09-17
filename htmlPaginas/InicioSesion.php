@@ -1,32 +1,24 @@
-  <?php
+<?php
   //INICIA el arreglo SESSION para mantenerlo
   session_start();
   require_once "../php/Login.php";
-  $Nombre ="";
-  $Contraseña="";
-  $resultado =false;
   if (isset($_POST['boton'])) {
     $Nombre = ($_POST['Nombre']);
     $Contraseña = ($_POST['Contrasena']);
 
-    $resultado = (new Login($Nombre, $Contraseña))->Validar();
-
-
-    if ($resultado == true) {
-    // UNA COOKIE QUE GUARDA LA INFORMACIÓN
-    // Nota: $_SESSION no es una cookie, es una sesión. Asegúrate de tener session_start(); al inicio del archivo.
-    $_SESSION["Nombre"] = $Nombre;
-    header("Location: https://google.com");
+    if((new Login($Nombre, $Contraseña))->Validar()){
+       $_SESSION["Nombre"] = $Nombre;
+       header("Location: index.html");
+       exit();
+    }
+    $_SESSION["MensajeValidar"]="Nombre de usuario o contraseña incorrectos";
+     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
-} else {
-    // CORREGIDO: Se añadió "Location: "
-    //header("Location: https://es.wikipedia.org/wiki/Anime");
-    exit();
+
 }
-
-
-  }
   ?>
+
+
   <!DOCTYPE html>
   <html lang="en">
 
@@ -40,31 +32,48 @@
   </head>
 
   <body>
-    <main>
-      <form method="post" action="">
+
+      <form class="shadow-lg" method="post" action="">
+
         <section class="row">
-          <section class="col">
-            <h1>Veterinaria maldonado</h1>
-          </section>
-        </section>
-        <div class="mb-3">
+          <div class="col-12 mb-5">
+            <img src="../archivos.img/LogoVeterinaria.jpeg" alt="">
+
+        </div>
+
+         <?php if (!empty($_SESSION["MensajeValidar"])) { ?>
+    <div class="col-12 text-danger text-center mb-3">
+        <?= htmlspecialchars($_SESSION["MensajeValidar"]) ?>
+        <?php unset($_SESSION["MensajeValidar"]); ?>
+    </div>
+<?php } ?>
+
+        <div class="col-12 mb-3">
           <label for="exampleInputEmail1" class="form-label">
             <h4>Nombre de usuario</h4>
           </label>
-          <input name="Nombre" type="text" class="form-control" id="exampleInputEmail1">
+          <input name="Nombre" type="text" class="form-control" id="exampleInputEmail1"required>
         </div>
-        <div class="mb-3">
+        <div class="col-12 mb-3">
           <label for="exampleInputPassword1" class="form-label">
             <h4>Contraseña</h4>
           </label>
-          <input name="Contrasena" type="password" class="form-control" id="exampleInputPassword1">
+          <input name="Contrasena" type="password" class="form-control" id="exampleInputPassword1" required>
         </div>
+        <div class="col-12">
         <button name="boton" type="submit" class="btn btn-primary">Iniciar sesión</button>
-        <p>
-        <h4>¿No tienes cuenta?</h4><a href="Registrarse.html" class="create-account">Crea una</a></p>
-        <p> <?php echo $resultado  ?></p>
+        </div>
+        <div class="col-12">
+       <a style="text-decoration: none;" href="http://localhost/veterinaria/htmlPaginas/Registrarse.php">Registrarse</a>
+        </div>
+        <div class="col-12">
+          <a style="text-decoration: none;" href="http://localhost/veterinaria/htmlPaginas/Registrarse.php">Recuperar contraseña</a>
+        </div>
+
+         </section>
+
       </form>
-    </main>
+
 
 
 

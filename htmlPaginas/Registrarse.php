@@ -3,7 +3,6 @@ require_once "../php/LogicaUsuario.php";
 require_once "../php/Login.php";
   //INICIA el arreglo SESSION para mantenerlo
   session_start();
-  $Error=true;
   if (isset($_POST['boton'])) {
     $rol="Usuario";
     $Ci=($_POST['Ci']);
@@ -15,13 +14,24 @@ require_once "../php/Login.php";
     $UsserName=($_POST['NombreDeUsuario']);
     $Contrasena=($_POST['Contrasena']);
 
-    $Usuario= new Usuario($Ci,$Nombre,$Apellido, $Mail,$Direccion, $Telefono, $rol);
-    $Error=$Usuario->AltaUsuario();
-    $login= new login($UsserName, $Contrasena);
-    $login->AltaLogin($Usuario->getCi());
+
+
+    $Usuario = new Usuario($Ci, $Nombre, $Apellido, $Mail, $Direccion, $Telefono, $rol);
+$Login = new login($UsserName, $Contrasena);
+$Verificacion=$Usuario->VerificarCi();
+$VerificacionLogin=$Login->VerificarUsuario();
+
+
+   if ($Verificacion !== "" || $VerificacionLogin !== "") {
+     $_SESSION["MensajeLogin"] = $VerificacionLogin;
+    $_SESSION["Mensaje"] = $Verificacion;
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+header("Location: index.php");
+    exit();
   }
   ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,9 +53,24 @@ require_once "../php/Login.php";
       <div class="col-12 mb-2">
       <img src="../archivos.img/LogoVeterinaria.jpeg" alt="/">
       </div>
+        <?php if (!empty($_SESSION["Mensaje"])) { ?>
+    <div class="col-12 text-danger text-center mb-3">
+        <?= htmlspecialchars($_SESSION["Mensaje"]) ?>
+        <?php unset($_SESSION["Mensaje"]); ?>
+    </div>
+<?php } ?>
+
+<!-- Mensaje específico del Login / Cuenta -->
+<?php if (!empty($_SESSION["MensajeLogin"])) { ?>
+    <div class="col-12 text-danger text-center mb-3">
+        <?= htmlspecialchars($_SESSION["MensajeLogin"]) ?>
+        <?php unset($_SESSION["MensajeLogin"]); ?>
+    </div>
+<?php } ?>
       <div class="col-md-6">
         <label for="InputNombre" class="form-label">Nombre</label>
-        <input name="Nombre" type="text" class="form-control" id="InputNombre" required>
+         <input name="Nombre" type="text" class="form-control" id="InputNombre" required>
+
       </div>
       <div class="col-md-6">
         <label for="InputApellido" class="form-label">Apellido</label>
@@ -57,7 +82,7 @@ require_once "../php/Login.php";
       </div>
       <div class="col-6">
         <label for="InputTel" class="form-label">Telefóno</label>
-        <input name="Telefono" type="tel" class="form-control" id="InputTel" required>
+        <input name="Telefono" type="number" class="form-control" id="InputTel" required>
       </div>
       <div class="col-6">
         <label for="InpuCi" class="form-label">Cedula</label>
@@ -88,40 +113,11 @@ require_once "../php/Login.php";
       </div>
       <div class="col-12">
                 <input class="btn btn-secondary" type="reset" value="Resetear valores">
+
       </div>
-<div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center w-100 position-fixed top-0 start-0 p-3" style="z-index: 11; pointer-events: none;">
-
-  <!-- Tu Toast original (le agregamos pointer-events para que se pueda hacer clic en el botón de cerrar) -->
-  <!-- Contenedor invisible posicionado abajo a la derecha -->
-<div aria-live="polite" aria-atomic="true" class="d-flex justify-content-end align-items-end w-100 h-100 position-fixed bottom-0 end-0 p-3" style="z-index: 11; pointer-events: none;">
-
-  <!-- Tu Toast original (con eventos de clic reactivados para poder cerrarlo) -->
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="pointer-events: auto;">
-    <div class="toast-header">
-      <img src="../archivos.img/LogoVeterinaria.jpeg" class="rounded me-2" alt="..." style="width: 20px; height: 20px;">
-      <strong class="me-auto">Veterinaria maldonado</strong>
-      <small></small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      papas
-      <?php echo $Error ?>
-    </div>
-  </div>
-
-</div>
-
-</div>
     </main>
   </form>
 
-</div>
-
-<?php if ($Error==true): ?>
-  <script src="../JavaScript/Toasts.js"></script>
-
-     <?php else: ?>
-<?php endif; ?>
 
 
 </body>

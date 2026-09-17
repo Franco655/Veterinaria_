@@ -10,3 +10,13 @@ CREATE TABLE Login(
     CiUsuario int
     );
 ALTER TABLE login ADD CONSTRAINT fk_CiUsuario FOREIGN KEY (CiUsuario) REFERENCES usuario(Ci)
+
+
+
+
+
+
+
+
+
+

@@ -6,12 +6,9 @@ form {
     border-radius: 20px; /* Consejo: usa px en lugar de % para border-radius */
     width: 40%;
     height: 30%;
-    background-color: rgba(226, 215, 215, 0.796);
 }
 
 body {
-
-    background-image: url("../archivos.img/FondoPatas.jpg");
     display: flex;
     justify-content: center; /* Centra horizontalmente */
     align-items: center;     /* Centra verticalmente */
@@ -32,4 +29,9 @@ img {
   margin-right: auto;    /* Empuja la imagen desde la derecha al centro */
   max-width: 40%;        /* Tu tamaño corregido sin el doble punto y coma */
   height: auto;          /* Mantiene la proporción */
+}
+
+.alerta{
+    color: red;
+    text-align: center;
 }

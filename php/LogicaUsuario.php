@@ -21,14 +21,14 @@ public function __construct(int $Ci,string $Nombre, string $Apellido,string $Mai
 }
 
 
-public function AltaUsuario(): bool
+public function AltaUsuario()
 {
-    $conn = new Conexion();
     $sql = "INSERT INTO usuario VALUES (?, ?, ?, ?, ?, ?, ?)";
-
+    $conn = new Conexion();
+    $db = $conn->establecer_conexion();
     try {
-        $consulta = $conn->establecer_conexion()->prepare($sql);
-        $success = $consulta->execute([
+        $consulta = $db->prepare($sql);
+        $consulta->execute([
             $this->Ci,
             $this->Nombre,
             $this->Apellido,
@@ -38,16 +38,21 @@ public function AltaUsuario(): bool
             $this->Rol
         ]);
 
-        return true;
-
     } catch (\PDOException $e) {
-        // El código 1062 es el de duplicado
-        if ($e->errorInfo[1] == 1062) {
-            return false;
-        } else {
-        }
-        return false;
     }
+}
+public function VerificarCi(): string{
+    $conn = new Conexion();
+    $db = $conn->establecer_conexion();
+
+    // . Verificación previa de cédula repetida
+    $sqlquery = "SELECT 1 FROM usuario WHERE Ci = ?";
+    $statement = $db->prepare($sqlquery);
+    $statement->execute([$this->Ci]);
+     if ($statement->fetchColumn()) {
+        return "El ci ya esta en uso";
+    }
+    return "";
 }
 
 

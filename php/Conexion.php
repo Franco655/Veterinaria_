@@ -17,7 +17,7 @@ class Conexion
                 $this->dsn,
                 $this->usuarioDb,
                 $this->passwordDb
-            );
+            ); //, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             return $this->pdo;
         } catch (PDOException $e) {
             throw new PDOException(

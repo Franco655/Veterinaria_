@@ -14,42 +14,58 @@ class Login
 
 
     public function AltaLogin(int $Ci)
-    {
-        $conectar = new Conexion();
-            $this->hashpassword = password_hash($this->hashpassword, PASSWORD_DEFAULT);
-            $sqlinsert = "INSERT INTO login VALUES (?,?,?)";
-            $statement = $conectar->establecer_conexion()->prepare($sqlinsert);
-            if ($statement->execute([
-                $this->username,
+{
+    $conectar = new Conexion();
+    $pdo = $conectar->establecer_conexion();
+    try {
+        $this->hashpassword = password_hash($this->hashpassword, PASSWORD_DEFAULT);
+        $sqlinsert = "INSERT INTO login VALUES (?, ?, ?)";
+        $statement = $pdo->prepare($sqlinsert);
+        $statement->execute([
+            $this->username,
             $this->hashpassword,
             $Ci
-            ]))
-            {
+        ]);
 
-                return true;
-            } else {
-            }
+        return "";
 
-        }
+    } catch (\PDOException $e) {
+        return "Hubo un error en el programa: " . $e->getMessage();
+    }
+}
+
 
 
 
      public function Validar(): bool
-    {
-        $conectar = new Conexion();
-        //el passord se resalta en azul porque el el editor lo detecta como una función
-        $sqlquery = "SELECT NombreDeUsuario, Contraseña FROM login WHERE NombreDeUsuario= ?";
-        $statement = $conectar->establecer_conexion()->prepare($sqlquery);
-        $statement->execute([$this->username]);
-        $usuarioEncontrado = $statement->fetch();
+{
+    $conectar = new Conexion();
+    $sqlquery = "SELECT NombreDeUsuario, Contraseña FROM login WHERE NombreDeUsuario = ?";
+    $statement = $conectar->establecer_conexion()->prepare($sqlquery);
+    $statement->execute([$this->username]);
+    $usuarioEncontrado = $statement->fetch();
 
-        if ($usuarioEncontrado == true) {
-            if(password_verify($this->hashpassword, $usuarioEncontrado["Contraseña"])){
-                return true;
-            }
+    if ($usuarioEncontrado) {
+        // Pasa la contraseña tal cual la ingresó el usuario
+        if (password_verify($this->hashpassword, $usuarioEncontrado["Contraseña"])) {
+            return true; // Credenciales correctas
         }
-        return false;
     }
+
+    return false; // Usuario no existe o contraseña incorrecta
+}
+
+ public function VerificarUsuario(): string{
+    $conectar = new Conexion();
+    $pdo = $conectar->establecer_conexion();
+    $sqlquery = "SELECT 1 FROM login WHERE NombreDeUsuario = ?";
+    $statementCheck = $pdo->prepare($sqlquery);
+    $statementCheck->execute([$this->username]);
+    if ($statementCheck->fetchColumn()) {
+        return "El Usuario ya esta usado";
+    }
+    return "";
+ }
 
 
     //GETTERS
