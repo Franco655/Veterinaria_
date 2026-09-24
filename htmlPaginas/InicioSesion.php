@@ -1,14 +1,14 @@
 <?php
-  //INICIA el arreglo SESSION para mantenerlo
-  session_start();
+  require_once "../php/config.php";
   require_once "../php/Login.php";
   if (isset($_POST['boton'])) {
     $Nombre = ($_POST['Nombre']);
     $Contraseña = ($_POST['Contrasena']);
 
-    if((new Login($Nombre, $Contraseña))->Validar()){
+    if(($Validar=new Login($Nombre, $Contraseña))->Validar()!==""){
+      $_SESSION["Rol"]=$Validar;
        $_SESSION["Nombre"] = $Nombre;
-       header("Location: index.html");
+       header("Location: index.php");
        exit();
     }
     $_SESSION["MensajeValidar"]="Nombre de usuario o contraseña incorrectos";

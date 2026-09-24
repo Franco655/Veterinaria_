@@ -37,23 +37,40 @@ class Login
 
 
 
-     public function Validar(): bool
+  public function Validar(): string
 {
+    // 1. Evitamos instanciar la conexión múltiples veces si no es necesario
     $conectar = new Conexion();
-    $sqlquery = "SELECT NombreDeUsuario, Contraseña FROM login WHERE NombreDeUsuario = ?";
-    $statement = $conectar->establecer_conexion()->prepare($sqlquery);
-    $statement->execute([$this->username]);
-    $usuarioEncontrado = $statement->fetch();
+    $db = $conectar->establecer_conexion();
 
-    if ($usuarioEncontrado) {
-        // Pasa la contraseña tal cual la ingresó el usuario
-        if (password_verify($this->hashpassword, $usuarioEncontrado["Contraseña"])) {
-            return true; // Credenciales correctas
+    // 2. Buscamos directamente por NombreDeUsuario para evitar conversiones implícitas de tipos en MySQL
+    $sqlquery = "SELECT l.Contraseña, u.Rol
+                 FROM login l
+                 INNER JOIN usuario u ON l.CiUsuario = u.Ci
+                 WHERE l.NombreDeUsuario = ?
+                 LIMIT 1"; // LIMIT 1 le dice al motor que se detenga apenas encuentre al usuario
+
+    try {
+        $statement = $db->prepare($sqlquery);
+        $statement->execute([$this->username]);
+
+        // 3. Usamos FETCH_ASSOC para liberar memoria y traer solo lo necesario
+        $usuarioEncontrado = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($usuarioEncontrado) {
+
+            if (password_verify($this->hashpassword, $usuarioEncontrado["Contraseña"])) {
+                return $usuarioEncontrado["Rol"];
+            }
         }
+    } catch (PDOException $e) {
+        // Opcional: Puedes registrar el error en un log (error_log($e->getMessage());)
+        return "";
     }
 
-    return false; // Usuario no existe o contraseña incorrecta
+    return "";
 }
+
 
  public function VerificarUsuario(): string{
     $conectar = new Conexion();

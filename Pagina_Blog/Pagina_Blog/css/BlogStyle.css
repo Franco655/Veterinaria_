@@ -1,0 +1,153 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color:#1a1a2e;
+}
+header{
+    background-color: rgb(219, 219, 219);
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    padding: 15px;
+}
+/* secion del header para ig,link,git animaciones*/
+nav{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: flex;
+    gap: 25px;
+}
+nav a{
+    text-decoration: none;
+    color: black;
+}
+nav a:hover{
+color: coral;
+}
+@media (max-width: 430px){
+    header, nav{
+        flex-direction: column;
+    }
+
+    nav{
+        margin-top: 15px;
+        align-items: center;
+    }
+}
+/*----------------------------------------------------------------*/
+
+
+/*Titulos mi bolg,Habilides*/
+h1 {
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+h2 {
+    text-align: left;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-left: 25px;
+    margin-top: 1px;
+    font-size: 2rem;
+}
+
+h3 {
+    text-align: left;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-left: 25px;
+    margin-top: 1px;
+    font-size: 2rem;
+}
+
+
+p {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color:#ffffff;
+    max-width: 350px;
+    margin: 15px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-left: 3px solid rgb(3, 3, 3);
+    border-radius: 0 8px 8px 0;
+    margin-left: 20px;
+}
+
+.fotter {
+    background-color: #000000;
+    padding: 40px 20px;
+    color: #f0f0f0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.fotter-row {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.fotter-enlaces {
+    flex: 1;
+    min-width: 150px;
+}
+
+.fotter-enlaces h4,
+.social-links h4 {
+    font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+    font-size: 1.1rem;
+    color: coral;
+    margin-bottom: 15px;
+    position: static;
+}
+
+.fotter-enlaces ul {
+    list-style: none;
+}
+
+.fotter-enlaces ul li {
+    margin-bottom: 10px;
+}
+
+.fotter-enlaces ul li a {
+    text-decoration: none;
+    color: #f0f0f0;
+    transition: color 0.3s;
+}
+
+.fotter-enlaces ul li a:hover {
+    color: coral;
+}
+
+.social-links {
+    flex: 1;
+    min-width: 150px;
+}
+
+.social-links a {
+    color: #f0f0f0;
+    font-size: 1.3rem;
+    margin-right: 15px;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: coral;
+}
+.CU{
+    text-decoration: none;
+    color: brown;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.CU:hover{
+    background-color: #f0f0f0;
+
+
+}

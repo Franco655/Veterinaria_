@@ -1,8 +1,8 @@
 <?php
+ require_once "../php/config.php";
 require_once "../php/LogicaUsuario.php";
 require_once "../php/Login.php";
-  //INICIA el arreglo SESSION para mantenerlo
-  session_start();
+ ;
   if (isset($_POST['boton'])) {
     $rol="Usuario";
     $Ci=($_POST['Ci']);

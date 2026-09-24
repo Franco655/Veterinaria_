@@ -5,6 +5,8 @@ background-size: cover;
     background-repeat: no-repeat;
     min-height: 100vh;
     width: 100%;
+    margin: 0 !important;
+  padding: 0 !important;
 }
 a{
 text-align: center;
@@ -25,90 +27,222 @@ html, body {
     margin: 0;
     padding: 0;
 }
+/* Limitar el ancho y centrar el carrusel completo */
+/* Limitar la altura de los elementos del carrusel */
+.carrusel .carousel-item {
+  max-height: 50vh; /* Ocupa el 35% de la altura de la pantalla */
 
-/* NAV */
-.navbar-custom {
-    width: 100%;
-    min-height: 70px;
+}
 
+.carrusel .carousel-item img {
+  height: 50vh !important;
+  object-fit: cover !important;
+  object-position: center;
+}
+
+
+
+
+
+
+/* Esto hace que el nav "flote" encima del carrusel */
+header {
+  position: absolute; /* Saca el nav del flujo normal */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;      /* Se coloca POR ENCIMA del carrusel */
+  background: transparent; /* Fondo transparente para ver la imagen detrás */
+}
+
+/* Opcional: Dale un alto al carrusel para que la imagen se acomode bien */
+.carrusel img {
+  height: 500px;
+  object-fit: cover;
+}
+
+
+/* Estilo para los enlaces 'Registrarme' e 'Iniciar sesión' sobre el carrusel */
+.nav-link-custom {
+  color: #ffffff;             /* Texto blanco para contrastar con las fotos */
+  text-decoration: none;      /* Quita el subrayado azul por defecto */
+  font-weight: 500;           /* Hace la letra un poco más gruesa/legible */
+  padding: 8px 16px;          /* Le da área de clic/botón */
+  border-radius: 6px;         /* Bordes levemente redondeados */
+  transition: all 0.2s ease;  /* Transición suave para el efecto hover */
+}
+
+/* Efecto al pasar el mouse por encima (Hover) */
+.nav-link-custom:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.15); /* Fondo translúcido sutil al pasar el cursor */
+}
+
+
+
+
+
+
+
+
+
+
+
+header{
+    background-color: rgba(34, 218, 13, 0.466);
+    color: white;
     display: flex;
+    justify-content:space-between;
     align-items: center;
-    justify-content: space-around;
+    padding: 5%;
+}
+/* secion del header para ig,link,git animaciones*/
 
-    background-color: white;
 
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
-
-    box-sizing: border-box;
+img{
+ height: auto;
+ width: 50%;
 }
 
-/* Enlaces */
-.nav-item {
-    flex: 1;
-
-    text-align: center;
-
-    padding: 22px 10px;
-
-    text-decoration: none;
-    color: #222;
-
-    font-size: 18px;
-    font-weight: 600;
-
-    transition: 0.3s;
-}
-
-/* Efecto al pasar el mouse */
-.nav-item:hover {
-    background-color: #f1f1f1;
-    color: #007bff;
-}
-
-
-/* 📱 Pantallas pequeñas */
-@media (max-width: 600px) {
-
-    .navbar-custom {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .nav-item {
-        padding: 15px;
-    }
-
-}
-/* From Uiverse.io by adamgiebl */
-.button{
+.titulo-seccion {
   position: relative;
+  font-weight: 700;
+  color: #2c3e50;
+  padding-bottom: 12px;
   display: inline-block;
-  margin: 15px;
-  padding: 15px 30px;
+  /* Centra el inline-block cuando el contenedor tiene text-center */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Línea decorativa inferior */
+.titulo-seccion::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: linear-gradient(90deg, #0d740a, #20c997); /* Usa el verde de tu veterinaria */
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Efecto hover: la línea se expande al pasar el mouse por el título */
+.titulo-seccion:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+.mapa {
+    width: 40vw;
+    height: 40vw;
+    margin: 0 auto; /* Añade esto */
+}
+
+.mapa {
+  width: 100%;
+  max-width: 800px; /* Ancho máximo en pantallas grandes */
+  height: 400px;    /* Altura fija para que el iframe se muestre */
+  border-radius: 16px;
+  overflow: hidden; /* Esencial para recortar los bordes redondeados del iframe */
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.mapa iframe {
+  width: 100%;
+  height: 100%;
+}
+
+/* Ajuste del iframe */
+.mapa-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(20%) contrast(95%); /* Dessatura ligeramente los colores */
+  transition: filter 0.3s ease;
+}
+
+/* Efecto al pasar el cursor */
+.mapa-container:hover iframe {
+  filter: grayscale(0%) contrast(100%); /* Vuelve a los colores normales */
+}
+.horario-section {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 24px 32px;
+  background: linear-gradient(135deg, #2c3e50, #1a252f);
+  color: #ffffff;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
   text-align: center;
-  font-size: 18px;
-  letter-spacing: 1px;
-  text-decoration: none;
-  color: #725AC1;
-  background: transparent;
-  cursor: pointer;
-  transition: ease-out 0.5s;
-  border: 2px solid #725AC1;
-  border-radius: 10px;
-  box-shadow: inset 0 0 0 0 #725AC1;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border-left: 5px solid #3498db;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
 }
 
-button:hover {
-  color: white;
-  box-shadow: inset 0 -100px 0 0 #725AC1;
+.titulo-horarios {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 30px 0 20px;
+    position: relative;
+    padding-bottom: 10px;
 }
 
-button:active {
-  transform: scale(0.9);
+/* Línea decorativa debajo del título */
+.titulo-horarios::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: #4caf50;
+    border-radius: 10px;
+    margin: 8px auto 0;
 }
-.Icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain; /* Evita que la imagen se deforme */
-    display: flex;
+
+.horario {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 35px 40px;
+
+    background-color: #f4faf8;
+    border-radius: 20px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+
+    border-top: 5px solid #4fa89a;
+}
+
+/* Título */
+
+
+/* Horarios */
+.horario p{
+    color: #4b5d5a;
+    font-size: 17px;
+    margin: 8px 0;
+}
+
+/* Último texto: emergencias */
+.horario p:last-child {
+    margin-top: 25px;
+    padding: 15px 20px;
+
+    background-color: #ffffff;
+    border-radius: 12px;
+
+    color: #2f6f68;
+    font-size: 15px;
+    font-weight: 500;
+
+    border-left: 4px solid #4fa89a;
+}
+
+.card{
+  width: 250px;
 }
