@@ -1,54 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/interfaz.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  <title>Inicio a Sesión</title>
-</head>
-<div class="container-fluid vh-100 d-flex flex-column p-0 overflow-hidden">
-  <!-- ENCABEZADO -->
-  <header class="row g-0 py-3 flex-shrink-0">
-      <div class="col-4" style="display: flex;">
-        <h2>Usuario:</h2>
-        <h2>"nombre"</h2>
-      </div>
-    <div class="col-4"><h2>Agregar Usuario </h2></div>
-       <div class="col-4">
-         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-    Opciones
-  </button>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/interfaz.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <title>Inicio a Sesión</title>
+  </head>
+<body class="d-flex flex-column vh-100"
+      style="background-color: #282626; color: #ffffff;">
 
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-     <li><a class="dropdown-item" href="">Cerrar sesión</a></li>
-      <li><a class="dropdown-item" href="#">Menu principal</a></li>
+    <!-- ENCABEZADO -->
+<header class="mx-0 flex-shrink-0">
 
-      <!--PANEL DE CONTROL DE EMPLEADO-->
+    <!-- PRIMERA FILA -->
+    <div class="row">
 
-  </ul>
+        <!-- USUARIO Y ROL -->
+        <section class="col-12 col-md-4">
+            <h2>usuario</h2>
+            <p>Rol</p>
+        </section>
 
 
 
-      </div>
-    </header>
+        <!-- OPCIONES -->
+        <div class="offset-md-4 col-12 col-md-4 d-flex justify-content-md-end align-items-center">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Opciones
+                </button>
 
-  <!-- CONTENEDOR INFERIOR -->
-  <div class="d-flex flex-grow-1 overflow-hidden" style="min-height: 0;">
-    <!-- MENÚ LATERAL -->
-    <ul class="sidebar-nav nav flex-column border h-100 w-25 flex-shrink-0 p-0">
-  <li class="nav-item border-bottom"><a class="nav-link" href="#">Citas</a></li>
-  <li class="nav-item border-bottom"><a class="nav-link" href="#">Ventas</a></li>
-  <li class="nav-item border-bottom"><a class="nav-link" href="#">Membresías</a></li>
-  <li class="nav-item border-bottom"><a class="nav-link" href="#">Animales</a></li>
-  <li class="nav-item border-bottom"><a class="nav-link" href="#">Clientes</a></li>
-  <li class="nav-item border-bottom"><a class="nav-link" href="#">Alertas</a></li>
-  <li class="nav-item border-bottom"><a class="nav-link" href="#">Usuarios</a></li>
-</ul>
-  <!--FALTA EMPLREADOS, ES NECESARIO LA VALIDACIÓN DE SERVIDOR-->
-    <!-- DIV VERDE CON SCROLL VERTICAL Y HORIZONTAL -->
-      <form class="overflow-auto" action="">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                        <a class="dropdown-item" href="">Cerrar sesión</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Menu principal</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!--SEGUNDA FILA-->
+  <section class="row">
+     <!-- TÍTULO -->
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <h2>Usuarios</h2>
+        </div>
+  </section>
+    <!-- TERCERA FILA -->
+    <div class="row">
+
+
+        <section class="col-12 col-md-4 offset-md-4 text-center">
+<h2>Modificar Usuario</h2>
+
+        </section>
+         <!-- AGREGAR -->
+        <section class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
+
+            <input class="btn btn-success"
+                   type="submit"
+                   value="Agregar Usuario">
+
+        </section>
+
+
+    </div>
+
+</header>
+
+
+
+    <hr class="m-0">
+
+    <!-- CONTENEDOR INFERIOR -->
+    <div class="d-flex flex-grow-1">
+
+        <!-- MENÚ LATERAL -->
+        <div>
+            <ul class="nav flex-column h-100">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Citas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Ventas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Membresías</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Animales</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Alertas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Usuarios</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="vr"></div>
+
+          <form method="post" class="overflow-auto" action="">
      <main class="row align-content-start">
     <section class="col-6 mb-3">
       <label for="Ci" class="form-label">Ci</label>
@@ -123,6 +189,7 @@
 
     </main>
     </form>
-  </div>
-</div>
-</html>
+    </div>
+
+</body>
+  </html>

@@ -1,61 +1,305 @@
-.buscador {
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 5px;
 
-}
+/* =========================
+   ESTILO GENERAL
+========================= */
 
-ul {
-      list-style: none;
-      padding: 0;
-      width: 250px;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    li {
-      position: relative;
-      text-align: center;
-      margin-bottom: 8px;
-
-      color: #655151;
-      cursor: pointer;
-      overflow: hidden; /* Necesario para contener la barra animada */
-
-      /* Transiciones suaves */
-      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    /* Pseudo-elemento para el indicador lateral oculto */
-    li::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      background-color: #f9fcff;
-      transform: scaleY(0); /* Oculto por defecto */
-      transition: transform 0.3s ease;
-    }
-
-    /* EFECTO HOVER */
-    li:hover {
-      background-color: #ffffff;
-      color: #c5c8cb;
-      transform: translateY(-3px) translateX(4px); /* Se eleva y mueve un poco a la derecha */
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra elegante */
-    }
-
-    /* Muestra la barra lateral al hacer hover */
-    li:hover::before {
-      transform: scaleY(1);
-    }
-    .Separa{
-    padding: 0.5%;
-    background-color: rgb(143, 151, 151);
-    }
-    .fondo{
+body {
     background-color: #282626;
     color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================
+   ENCABEZADO
+========================= */
+
+header {
+    background-color: #211f1f;
+    padding: 15px 10px 10px;
+    border-bottom: 1px solid #444;
+}
+
+/* Nombre del usuario */
+header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* Título Usuarios */
+header .col-4:nth-child(2) {
+    text-align: center;
+}
+
+/* Botón opciones */
+#dropdownMenuButton {
+    background-color: #343232;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 15px;
+}
+
+#dropdownMenuButton:hover {
+    background-color: #444;
+}
+
+
+/* =========================
+   DROPDOWN
+========================= */
+
+.dropdown-menu {
+    background-color: #302e2e;
+    border: 1px solid #555;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dropdown-item {
+    color: white;
+    padding: 10px 15px;
+}
+
+.dropdown-item:hover {
+    background-color: #454242;
+    color: white;
+}
+
+
+/* =========================
+   ROL
+========================= */
+
+header section.col-4:nth-of-type(2) {
+    color: #aaa;
+    font-size: 14px;
+}
+
+
+/* =========================
+   BUSCADOR
+========================= */
+
+.buscador form {
+    display: flex;
+    gap: 8px;
+}
+
+.buscador input {
+    background-color: #353333;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 7px;
+    padding: 8px 12px;
+    outline: none;
+    width: 100%;
+}
+
+.buscador input::placeholder {
+    color: #aaa;
+}
+
+.buscador input:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 2px rgba(25, 135, 84, 0.2);
+}
+
+.buscador button {
+    background-color: #198754;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.buscador button:hover {
+    background-color: #157347;
+}
+
+
+/* =========================
+   BOTÓN AGREGAR USUARIO
+========================= */
+
+header input[type="submit"] {
+    float: right;
+    border-radius: 7px;
+    padding: 8px 16px;
+    border: none;
+}
+
+
+/* =========================
+   MENÚ LATERAL
+========================= */
+
+.d-flex.flex-grow-1 > div:first-child {
+    width: 190px;
+    min-width: 190px;
+    background-color: #211f1f;
+}
+
+/* Lista */
+.nav {
+    padding: 15px 10px;
+}
+
+/* Enlaces */
+.nav-link {
+    color: #bdbdbd;
+    padding: 12px 15px;
+    margin-bottom: 4px;
+    border-radius: 7px;
+    transition: 0.2s;
+}
+
+/* Hover */
+.nav-link:hover {
+    background-color: #363333;
+    color: white;
+}
+
+/* Página actual */
+.nav-link[href="#"] {
+    color: white;
+}
+
+
+/* =========================
+   SEPARADOR
+========================= */
+
+.vr {
+    opacity: 0.3;
+}
+
+
+/* =========================
+   CONTENIDO PRINCIPAL
+========================= */
+
+main {
+    padding: 25px;
+    background-color: #282626;
+}
+
+
+/* =========================
+   SCROLL
+========================= */
+
+main::-webkit-scrollbar {
+    width: 8px;
+}
+
+main::-webkit-scrollbar-track {
+    background: #242222;
+}
+
+main::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px;
+}
+
+main::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+```css
+/* =========================
+   HEADER RESPONSIVE
+========================= */
+
+header {
+    padding: 15px 10px;
+}
+
+header h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.buscador form {
+    display: flex;
+    gap: 8px;
+}
+
+.buscador input {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Cuando la pantalla es pequeña */
+@media (max-width: 767px) {
+
+    header {
+        padding: 12px 8px;
     }
 
+    header h2 {
+        font-size: 18px;
+    }
+
+    .buscador input {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+
+    .buscador button {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    #dropdownMenuButton {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    header .btn-success {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}
+
+
+/* Pantallas todavía más pequeñas */
+@media (max-width: 450px) {
+
+    header h2 {
+        font-size: 16px;
+    }
+
+    .buscador form {
+        gap: 4px;
+    }
+
+    .buscador input {
+        font-size: 12px;
+    }
+
+    .buscador button {
+        font-size: 12px;
+        padding: 5px 8px;
+    }
+
+    #dropdownMenuButton {
+        font-size: 12px;
+    }
+
+    header .btn-success {
+        font-size: 12px;
+    }
+}
+.buscador {
+    display: flex;
+    justify-content: center;
+}
+
+.buscador form {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    max-width: 400px;
+}

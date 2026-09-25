@@ -2,9 +2,7 @@
  require_once "../php/config.php";
 require_once "../php/LogicaUsuario.php";
 require_once "../php/Login.php";
- ;
   if (isset($_POST['boton'])) {
-    $rol="Usuario";
     $Ci=($_POST['Ci']);
     $Nombre=($_POST['Nombre']);
     $Apellido = ($_POST['Apellido']);
@@ -16,7 +14,7 @@ require_once "../php/Login.php";
 
 
 
-    $Usuario = new Usuario($Ci, $Nombre, $Apellido, $Mail, $Direccion, $Telefono, $rol);
+    $Usuario = new Usuario($Ci, $Nombre, $Apellido, $Mail, $Direccion, $Telefono);
 $Login = new login($UsserName, $Contrasena);
 $Verificacion=$Usuario->VerificarCi();
 $VerificacionLogin=$Login->VerificarUsuario();
@@ -28,6 +26,12 @@ $VerificacionLogin=$Login->VerificarUsuario();
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
+ $_SESSION["Nombre"] = $Nombre;
+    $_SESSION["Rol"] = $Usuario->getRol();
+    $Usuario->AltaUsuario();
+    $Login->AltaLogin($Ci);
+
+
 header("Location: index.php");
     exit();
   }

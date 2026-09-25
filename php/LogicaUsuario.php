@@ -10,7 +10,7 @@ Private string $Direccion;
 private int $Telefono;
 private String $Rol;
 
-public function __construct(int $Ci,string $Nombre, string $Apellido,string $Mail, string $Direccion,int $Telefono, ?string $Rol) {
+public function __construct(int $Ci,string $Nombre, string $Apellido,string $Mail, string $Direccion,int $Telefono, ?string $Rol="Administrador") {
     $this->Ci=$Ci;
     $this->Nombre=$Nombre;
     $this->Apellido=$Apellido;

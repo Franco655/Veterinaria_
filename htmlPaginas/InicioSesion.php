@@ -5,17 +5,23 @@
     $Nombre = ($_POST['Nombre']);
     $Contraseña = ($_POST['Contrasena']);
 
-    if(($Validar=new Login($Nombre, $Contraseña))->Validar()!==""){
-      $_SESSION["Rol"]=$Validar;
-       $_SESSION["Nombre"] = $Nombre;
-       header("Location: index.php");
-       exit();
-    }
-    $_SESSION["MensajeValidar"]="Nombre de usuario o contraseña incorrectos";
-     header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
+    $Validar = new Login($Nombre, $Contraseña);
 
+$Rol = $Validar->Validar();
+
+if ($Rol !== "") {
+    $_SESSION["Rol"] = $Rol;
+    $_SESSION["Nombre"] = $Nombre;
+
+    header("Location: index.php");
+    exit();
 }
+
+$_SESSION["MensajeValidar"] = "Nombre de usuario o contraseña incorrectos";
+
+header("Location: " . $_SERVER['PHP_SELF']);
+exit();
+  }
   ?>
 
 

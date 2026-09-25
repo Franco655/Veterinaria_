@@ -4,7 +4,6 @@
 if (isset($_POST['boton'])) {
   session_unset();
 }
-
 ?>
 
 
@@ -41,13 +40,8 @@ if (isset($_POST['boton'])) {
       <div class="col-12 col-md-8">
         <nav class="d-flex justify-content-center justify-content-md-end gap-3 align-items-center flex-wrap">
 
-          <a href="Registrarse.php" class="nav-link-custom">
-            Registrarme
-          </a>
 
-          <a href="InicioSesion.php" class="nav-link-custom">
-            Iniciar sesión
-          </a>
+
 <?php if(isset($_SESSION["Nombre"])){ ?>
           <div class="dropdown">
             <button class="btn btn-outline-light dropdown-toggle"
@@ -55,7 +49,7 @@ if (isset($_POST['boton'])) {
                     id="dropdownMenuButton"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
-              Usuario
+               <h2><?= htmlspecialchars($_SESSION["Nombre"], ENT_QUOTES, 'UTF-8') ?></h2>
             </button>
 
 
@@ -76,10 +70,10 @@ if (isset($_POST['boton'])) {
             </a>
         </li>
 
-        <?php if ($_SESSION["Rol"] == "Empleado" || $_SESSION["Rol"] == "Administrador"){ ?>
+        <?php if ($_SESSION["Rol"] === "Empleado" || $_SESSION["Rol"] === "Administrador"){ ?>
 
             <li>
-                <a class="dropdown-item" href="ListaEmpleados.html">
+                <a class="dropdown-item" href="./ControlIndex.php">
                     Panel de control
                 </a>
             </li>
@@ -88,8 +82,14 @@ if (isset($_POST['boton'])) {
 
     </ul>
 
-<?php } else { ?>
+<?php }else{ ?>
+ <a href="Registrarse.php" class="nav-link-custom">
+            Registrarme
+          </a>
 
+          <a href="InicioSesion.php" class="nav-link-custom">
+            Iniciar sesión
+          </a>
 
 <?php } ?>
           </div>

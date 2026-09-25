@@ -1,3 +1,17 @@
+  <?php
+require_once "../php/config.php";
+
+ if (isset($_POST['boton'])) {
+session_unset();
+header("Location: index.php");
+ }
+if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"]=== "Usuario") {
+    header("Location: index.php");
+    exit();
+}
+
+?>
+
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -20,8 +34,8 @@
 
         <!-- USUARIO Y ROL -->
         <section class="col-12 col-md-4">
-            <h2>usuario</h2>
-            <p>Rol</p>
+               <h2><?= htmlspecialchars($_SESSION["Nombre"], ENT_QUOTES, 'UTF-8') ?></h2>
+          <p><?= htmlspecialchars($_SESSION["Rol"], ENT_QUOTES, 'UTF-8') ?></p>
         </section>
 
 
@@ -38,11 +52,15 @@
                 </button>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li>
+    <form method="post" action="">
+        <button name="boton" class="dropdown-item" type="submit">
+            Cerrar sesión
+        </button>
+    </form>
+</li>
                     <li>
-                        <a class="dropdown-item" href="">Cerrar sesión</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">Menu principal</a>
+                        <a class="dropdown-item" href="./index.php">Menu principal</a>
                     </li>
                 </ul>
             </div>
@@ -50,41 +68,10 @@
 
     </div>
 
-    <!--SEGUNDA FILA-->
-  <section class="row">
-     <!-- TÍTULO -->
-        <div class="col-12 d-flex justify-content-center align-items-center">
-            <h2>Usuarios</h2>
-        </div>
-  </section>
-    <!-- TERCERA FILA -->
-    <div class="row">
 
 
-        <section class="col-12 col-md-4 offset-md-4 text-center">
-<div class="buscador">
-                <form action="/buscar" method="GET">
-
-                    <input type="search"
-                           name="q"
-                           placeholder="Buscar..."
-                           required>
-
-                    <button type="submit">
-                        Buscar
-                    </button>
-
-                </form>
-            </div>
-
-        </section>
-         <!-- AGREGAR -->
-        <section class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
-            <a  class="btn btn-success" href="AltaUsuario.php">Agregar Usuario</a>
-        </section>
 
 
-    </div>
 
 </header>
 
@@ -118,9 +105,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Alertas</a>
                 </li>
+                <?php if($_SESSION["Rol"]==="Administrador"){?>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Usuarios</a>
+                    <a class="nav-link" href="./ListaEmpleados.html">Usuarios</a>
                 </li>
+                <?php } ?>
             </ul>
         </div>
 

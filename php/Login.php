@@ -17,7 +17,6 @@ class Login
 {
     $conectar = new Conexion();
     $pdo = $conectar->establecer_conexion();
-    try {
         $this->hashpassword = password_hash($this->hashpassword, PASSWORD_DEFAULT);
         $sqlinsert = "INSERT INTO login VALUES (?, ?, ?)";
         $statement = $pdo->prepare($sqlinsert);
@@ -26,12 +25,6 @@ class Login
             $this->hashpassword,
             $Ci
         ]);
-
-        return "";
-
-    } catch (\PDOException $e) {
-        return "Hubo un error en el programa: " . $e->getMessage();
-    }
 }
 
 
