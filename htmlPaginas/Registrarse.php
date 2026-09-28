@@ -26,7 +26,7 @@ $VerificacionLogin=$Login->VerificarUsuario();
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
- $_SESSION["Nombre"] = $Nombre;
+ $_SESSION["NombreDeUsuario"] = $Login->getUsername();
     $_SESSION["Rol"] = $Usuario->getRol();
     $Usuario->AltaUsuario();
     $Login->AltaLogin($Ci);

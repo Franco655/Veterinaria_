@@ -1,17 +1,29 @@
 LINEAS PARA CREAR LA BD
 
-CREATE BD veterinaria
+CREATE DATABASE veterinaria;
 
-CREATE TABLE usuario( Ci int PRIMARY KEY, Nombre varchar(100), Apellido varchar(100), Direccion varchar(100), Mail varchar(250), Telefono varchar(20), Rol varchar(30) );
+CREATE TABLE usuario(
+    Ci VARCHAR(8) PRIMARY KEY,
+    Nombre VARCHAR(100),
+    Apellido VARCHAR(100),
+    Direccion VARCHAR(100),
+    Mail VARCHAR(250),
+    Telefono VARCHAR(20),
+    Rol VARCHAR(30)
+);
 
 CREATE TABLE Login(
-    NombreDeUsuario varchar(50) PRIMARY KEY,
-    Contraseña varchar(250),
-    CiUsuario int
-    );
-ALTER TABLE login ADD CONSTRAINT fk_CiUsuario FOREIGN KEY (CiUsuario) REFERENCES usuario(Ci)
+    NombreDeUsuario VARCHAR(50) PRIMARY KEY,
+    Contraseña VARCHAR(250),
+    CiUsuario VARCHAR(8)
+);
 
-
+ALTER TABLE login
+ADD CONSTRAINT fk_CiUsuario
+FOREIGN KEY (CiUsuario)
+REFERENCES usuario(Ci)
+ON UPDATE CASCADE
+ON DELETE CASCADE;
 
 
 

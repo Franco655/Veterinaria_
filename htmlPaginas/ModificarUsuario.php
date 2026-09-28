@@ -7,7 +7,7 @@ if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"] !=="Admini
     exit();
 }
 
-  if (isset($_POST['boton'])) {
+    if (isset($_POST['boton'])) {
     $Ci=($_POST['Ci']);
     $Nombre=($_POST['Nombre']);
     $Apellido = ($_POST['Apellido']);
@@ -15,26 +15,25 @@ if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"] !=="Admini
     $Direccion=($_POST['Direccion']);
     $Telefono=($_POST['Telefono']);
     $UsserName=($_POST['NombreDeUsuario']);
-    $Contrasena=($_POST['Contrasena']);
     $Rol=($_POST['Rol']);
       $Usuario = new Usuario($Ci, $Nombre, $Apellido, $Mail, $Direccion, $Telefono, $Rol);
-      $Login = new login($UsserName, $Contrasena);
+      $Login = new login($UsserName);
 
-$Verificacion=$Usuario->VerificarCi();
-$VerificacionLogin=$Login->VerificarUsuario();
+$Verificacion=$Usuario->VerificarCi($_SESSION["Usuario"]["Ci"]);
+$VerificacionLogin=$Login->VerificarUsuario($_SESSION["Usuario"]["NombreDeUsuario"]);
 if ($Verificacion !== "" || $VerificacionLogin !== "") {
 
     $_SESSION["MensajeLogin"] = $VerificacionLogin;
     $_SESSION["Mensaje"] = $Verificacion;
 
 } else {
-$Usuario->AltaUsuario();
-    $Login->AltaLogin($Ci);
-
-    $_SESSION["MensajeToast"] = "Usuario agregado correctamente";
+$CiAnterior=$_SESSION["Usuario"]["Ci"];
+    $Usuario->ModificarUsuario($CiAnterior);
+    $Login->ModificarLogin($Usuario->getCi());
+    $_SESSION["MensajeToast"] = "Usuario modificado correctamente correctamente";
 }
-
-header("Location: " . $_SERVER['PHP_SELF']);
+unset($_SESSION["Usuario"]);
+header("Location: ./ListarUsuario.php");
 exit();
   }
 
@@ -65,14 +64,14 @@ exit();
    header("Location: index.php");
     exit();
 }
-
 ?>
 <?php
 $MensajeToast = $_SESSION["MensajeToast"] ?? "";
 
 unset($_SESSION["MensajeToast"]);
 ?>
-<!DOCTYPE html>
+
+  <!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -93,7 +92,7 @@ unset($_SESSION["MensajeToast"]);
 
         <!-- USUARIO Y ROL -->
         <section class="col-12 col-md-4">
-          <h2><?= htmlspecialchars($_SESSION["Nombre"], ENT_QUOTES, 'UTF-8') ?></h2>
+              <h2><?= htmlspecialchars($_SESSION["Nombre"], ENT_QUOTES, 'UTF-8') ?></h2>
           <p><?= htmlspecialchars($_SESSION["Rol"], ENT_QUOTES, 'UTF-8') ?></p>
         </section>
 
@@ -111,7 +110,7 @@ unset($_SESSION["MensajeToast"]);
                 </button>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <li>
+                     <li>
                      <form method="post" action="">
         <button name="botonClose" class="dropdown-item" type="submit">
             Cerrar sesión
@@ -139,15 +138,22 @@ unset($_SESSION["MensajeToast"]);
 
 
         <section class="col-12 col-md-4 offset-md-4 text-center">
-<h2>Agregar Usuario</h2>
+<h2>Modificar Usuario</h2>
 
         </section>
+         <!-- AGREGAR USUARIO -->
+    <div class="col-12 col-md-3 text-md-end">
+        <a
+            class="btn btn-success"
+            href="AltaUsuario.php">
+            Agregar Usuario
+        </a>
+    </div>
 
 
     </div>
 
 </header>
-
 
 
 
@@ -187,57 +193,69 @@ unset($_SESSION["MensajeToast"]);
 
         <div class="vr"></div>
 
-          <form  method="post" class="overflow-auto" action="">
-      <main class="row flex-grow-1 h-100 align-content-start">
+          <form method="post" class="overflow-auto" action="">
+     <main class="row align-content-start">
     <section class="col-6 mb-3">
       <label for="Ci" class="form-label">Ci</label>
-      <input name="Ci" type="number" inputmode="numeric" pattern="[0-9]{8}" class="form-control" id="Ci" placeholder="Ej: 56573322" required>
+      <input name="Ci" value="<?= htmlspecialchars($_SESSION["Usuario"]["Ci"]) ?>" type="number" class="form-control" id="Ci" placeholder="Ej: 56573322" required>
+      <div  class="form-text d-flex text-light">
+        <p style="display: flex;">Ci anterior:&nbsp</p><p><?= htmlspecialchars($_SESSION["Usuario"]["Ci"]) ?></p></div>
     </section>
 
     <section class="col-6 mb-3">
-      <label for="Mail" class="form-label">Mail</label>
-      <input name="Mail" type="email" class="form-control" id="Mail" placeholder="Ej: papas@gmail.com" required>
+      <label for="Gmail" class="form-label">Gmail</label>
+      <input name="Mail" value="<?= htmlspecialchars($_SESSION["Usuario"]["Mail"]) ?>" type="email" class="form-control" id="Gmail" placeholder="Ej: papas@gmail.com" required>
+      <div class="form-text d-flex text-light">
+        <p style="display: flex;">Gmail anterior anterior:&nbsp</p><p><?= htmlspecialchars($_SESSION["Usuario"]["Mail"]) ?></p></div>
     </section>
 
       <section class="col-6 mb-3">
       <label for="Nombre" class="form-label">Nombre</label>
-      <input name="Nombre" type="text" class="form-control" id="Nombre" placeholder="" required>
+      <input name="Nombre" value="<?= htmlspecialchars($_SESSION["Usuario"]["Nombre"]) ?>" type="text" class="form-control" id="Nombre" placeholder="" required>
+       <div  class="form-text d-flex text-light">
+        <p style="display: flex;">Nombre anterior:&nbsp</p><p><?= htmlspecialchars($_SESSION["Usuario"]["Nombre"]) ?></p></div>
     </section>
 
       <section class="col-6 mb-3">
       <label for="Apellido" class="form-label">Apellido</label>
-      <input name="Apellido" type="text" class="form-control" id="Apellido" placeholder="" required>
+      <input name="Apellido"  value="<?= htmlspecialchars($_SESSION["Usuario"]["Apellido"]) ?>" type="text" class="form-control" id="Apellido" placeholder="" required>
+      <div  class="form-text d-flex text-light">
+        <p  class="text-light" style="display: flex;">Apellido&nbspanterior:&nbsp</p><p><?= htmlspecialchars($_SESSION["Usuario"]["Apellido"]) ?></p></div>
     </section>
 
       <section class="col-6 mb-3">
       <label for="Numero" class="form-label">Telefono</label>
-      <input name="Telefono" type="number" class="form-control" id="Numero" placeholder="Ej: 093899890" required>
+      <input name="Telefono" value="<?= htmlspecialchars($_SESSION["Usuario"]["Telefono"]) ?>" type="number" class="form-control" id="Numero" placeholder="Ej: 093899890" required>
+      <div  class="form-text d-flex text-light">
+        <p style="display: flex;">Telefóno anterior:&nbsp</p><p><?= htmlspecialchars($_SESSION["Usuario"]["Telefono"]) ?></p></div>
     </section>
 
     <section class="col-6 mb-3">
       <label for="Direccion" class="form-label">Dirección</label>
-      <input name="Direccion" type="text" class="form-control" id="Direccion" placeholder="Santana 654" required>
+      <input name="Direccion" value="<?= htmlspecialchars($_SESSION["Usuario"]["Direccion"]) ?>" type="text" class="form-control" id="Direccion" placeholder="Santana 654" required>
+      <div  class="form-text d-flex  text-light">
+        <p class="text-light" tyle="display: flex;">Dirección anterior:&nbsp</p><p><?= htmlspecialchars($_SESSION["Usuario"]["Direccion"]) ?></p></div>
     </section>
 
         <section class="col-6 mb-3">
-        <label for="" class="form-label">Rol</label>
-        <select name="Rol" id="" class="form-select">
+        <label for="Rol" class="form-label">Rol</label>
+        <select name="Rol" id="Rol" class="form-select">
           <option value="Empleado">Empleado</option>
           <option value="Usuario">usuario</option>
           <option value="Administrador">Administrador</option>
         </select>
+        <div  class="form-text d-flex text-light">
+        <p style="display: flex;">Rol anterior:&nbsp</p><p><?= htmlspecialchars($_SESSION["Usuario"]["Rol"]) ?></p></div>
         </section>
 
+        <section class="col-6 mb-3">
+      <label for="Usuario" class="form-label">Nombre de Usuario</label>
+      <input name="NombreDeUsuario" value="<?= htmlspecialchars($_SESSION["Usuario"]["NombreDeUsuario"]) ?>" type="text" class="form-control" id="Usuario" placeholder="" required>
+       <div  class="form-text d-flex text-light">
+        <p style="display: flex;">Nombre&nbspde&nbspusuario&nbspanterior:&nbsp</p><p><?= htmlspecialchars($_SESSION["Usuario"]["NombreDeUsuario"]) ?></p></div>
+    </section>
 
- <section class="col-6">
-        <label for="InputContrasena" class="form-label">Contraseña</label>
-        <input name="Contrasena" type="password" class="form-control" id="InputContrasena" required>
- </section>
- <section class="col-12">
-        <label for="InputUsser" class="form-label">NombreDeUsuario</label>
-        <input name="NombreDeUsuario" type="text" class="form-control" id="InputUsser" required>
- </section>
-  <?php if (!empty($_SESSION["Mensaje"])) { ?>
+     <?php if (!empty($_SESSION["Mensaje"])) { ?>
     <div class="col-12 text-danger text-center mb-3">
         <?= htmlspecialchars($_SESSION["Mensaje"]) ?>
         <?php unset($_SESSION["Mensaje"]); ?>
@@ -251,15 +269,22 @@ unset($_SESSION["MensajeToast"]);
         <?php unset($_SESSION["MensajeLogin"]); ?>
     </div>
 <?php } ?>
-          <section class="col-12 mb-6">
-        <input class="btn btn-secondary mb-3" type="reset" value="Resetear valores" required>
-        </section>
+       </section>
          <section class="col-12">
-        <input  name="boton" class="btn btn-success mb-3" type="submit" value="agregar usuario" id="liveToastBtn" required>
+        <input  name="boton" class="btn btn-success mb-3" type="submit" value="Modificar usuario" id="liveToastBtn" required>
         </section>
-        <section class="col-6 mb-6">
-       <a href="../htmlPaginas/ListaEmpleados.php" class="btn btn-danger" role="button">Salir</a>
+
+         <section class="col-12 mb-6">
+        <input class="btn btn-secondary mb-3" type="reset" value="Resetear valores">
         </section>
+
+        <section class="col-12 mb-6">
+       <a href="./ListarUsuario.php" class="btn btn-danger" role="button">Salir</a>
+        </section>
+
+
+
+
 
 
 
@@ -267,33 +292,6 @@ unset($_SESSION["MensajeToast"]);
     </main>
     </form>
     </div>
-     <!--TOAST-->
-  <div class="toast-container position-fixed bottom-0 end-0 p-3">
 
-    <div id="liveToast"
-         class="toast"
-         data-mostrar="<?= $MensajeToast !== "" ? 'true' : 'false' ?>"
-         role="alert"
-         aria-live="assertive"
-         aria-atomic="true">
-
-        <div class="toast-header">
-            <strong class="me-auto">Veterinaria</strong>
-
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="toast"
-                    aria-label="Close">
-            </button>
-        </div>
-
-        <div class="toast-body bg-success text-white">
-            <?= htmlspecialchars($MensajeToast, ENT_QUOTES, 'UTF-8') ?>
-        </div>
-
-    </div>
-
-</div>
-<script src="../JavaScript/Interfaz.js"></script>
 </body>
-  </html>
+</html>

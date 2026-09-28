@@ -184,6 +184,7 @@ header input[type="submit"] {
 main {
     padding: 25px;
     background-color: #282626;
+    min-height: 0;
 }
 
 
@@ -207,7 +208,6 @@ main::-webkit-scrollbar-thumb {
 main::-webkit-scrollbar-thumb:hover {
     background: #666;
 }
-```css
 /* =========================
    HEADER RESPONSIVE
 ========================= */

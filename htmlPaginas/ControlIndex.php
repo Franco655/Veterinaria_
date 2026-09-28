@@ -1,14 +1,38 @@
   <?php
 require_once "../php/config.php";
-
- if (isset($_POST['boton'])) {
-session_unset();
-header("Location: index.php");
- }
 if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"]=== "Usuario") {
     header("Location: index.php");
     exit();
 }
+
+ if (isset($_POST['botonClose'])) {
+    // 1. Asegurar que la sesión esté iniciada para poder destruirla
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // 2. Limpiar las variables en memoria
+    $_SESSION = [];
+
+    // 3. Destruir la cookie en el navegador (Usando el método moderno)
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', [
+            'expires' => time() - 3600,
+            'path' => $params["path"],
+            'domain' => $params["domain"],
+            'secure' => $params["secure"],
+            'httponly' => $params["httponly"],
+            'samesite' => 'Strict'
+        ]);
+    }
+    // 4. Destruir la sesión en el servidor
+    session_destroy();
+    // 5. Redirigir para evitar que el usuario recargue la página y reenvíe el formulario
+   header("Location: index.php");
+    exit();
+}
+
 
 ?>
 
@@ -53,12 +77,12 @@ if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"]=== "Usuari
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <li>
-    <form method="post" action="">
-        <button name="boton" class="dropdown-item" type="submit">
+                     <form method="post" action="">
+        <button name="botonClose" class="dropdown-item" type="submit">
             Cerrar sesión
         </button>
     </form>
-</li>
+                    </li>
                     <li>
                         <a class="dropdown-item" href="./index.php">Menu principal</a>
                     </li>
@@ -107,7 +131,7 @@ if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"]=== "Usuari
                 </li>
                 <?php if($_SESSION["Rol"]==="Administrador"){?>
                 <li class="nav-item">
-                    <a class="nav-link" href="./ListaEmpleados.html">Usuarios</a>
+                    <a class="nav-link" href="./ListarUsuario.php">Usuarios</a>
                 </li>
                 <?php } ?>
             </ul>

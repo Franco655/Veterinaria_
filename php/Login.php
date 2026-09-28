@@ -65,9 +65,22 @@ class Login
 }
 
 
- public function VerificarUsuario(): string{
+ public function VerificarUsuario($Verificar=null): string{
     $conectar = new Conexion();
     $pdo = $conectar->establecer_conexion();
+    if($Verificar !=null){
+    $sqlquery="SELECT * FROM login WHERE NombreDeUsuario = ? AND NombreDeUsuario != ?";
+ $statement = $pdo->prepare($sqlquery);
+    $statement->execute([
+        $this->username,
+        $Verificar
+    ]);
+     if ($statement->fetchColumn()) {
+        return "El Usuario ya esta en uso";
+    }
+    return "";
+
+    }
     $sqlquery = "SELECT 1 FROM login WHERE NombreDeUsuario = ?";
     $statementCheck = $pdo->prepare($sqlquery);
     $statementCheck->execute([$this->username]);
@@ -76,6 +89,20 @@ class Login
     }
     return "";
  }
+
+ public function ModificarLogin(int $Ci)
+{
+    $conexion = new Conexion();
+    $pdo = $conexion->establecer_conexion();
+    $sql = "UPDATE login
+            SET NombreDeUsuario = ?
+            WHERE CiUsuario = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        $this->username,
+        $Ci
+    ]);
+}
 
 
     //GETTERS
