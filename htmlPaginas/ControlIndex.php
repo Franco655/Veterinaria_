@@ -1,7 +1,7 @@
   <?php
 require_once "../php/config.php";
 if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"]=== "Usuario") {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -29,7 +29,7 @@ if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"]=== "Usuari
     // 4. Destruir la sesión en el servidor
     session_destroy();
     // 5. Redirigir para evitar que el usuario recargue la página y reenvíe el formulario
-   header("Location: index.php");
+   header("Location: ./index.php");
     exit();
 }
 
@@ -131,7 +131,7 @@ if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"]=== "Usuari
                 </li>
                 <?php if($_SESSION["Rol"]==="Administrador"){?>
                 <li class="nav-item">
-                    <a class="nav-link" href="./ListarUsuario.php">Usuarios</a>
+                    <a class="nav-link" href="./Usuario/ListarUsuario.php">Usuarios</a>
                 </li>
                 <?php } ?>
             </ul>

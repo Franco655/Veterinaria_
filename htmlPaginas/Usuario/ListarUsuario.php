@@ -1,7 +1,7 @@
   <?php
-require_once "../php/config.php";
-require_once "../php/LogicaUsuario.php";
-require_once "../php/Login.php";
+require_once "../../php/config.php";
+require_once "../../php/LogicaUsuario.php";
+require_once "../../php/Login.php";
 if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"] !=="Administrador") {
     header("Location: index.php");
     exit();
@@ -50,7 +50,7 @@ if (isset($_POST['botonClose'])) {
     // 4. Destruir la sesión en el servidor
     session_destroy();
     // 5. Redirigir para evitar que el usuario recargue la página y reenvíe el formulario
-   header("Location: index.php");
+   header("Location: ../index.php");
     exit();
 }
 if (isset($_POST['botonDelete'])) {
@@ -73,7 +73,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/interfaz.css">
+    <link rel="stylesheet" href="../../css/interfaz.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <title>Inicio a Sesión</title>
@@ -116,7 +116,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
     </form>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">Menu principal</a>
+                        <a class="dropdown-item" href="../index.php">Menu principal</a>
                     </li>
                 </ul>
             </div>
@@ -169,10 +169,10 @@ header("Location: " . $_SERVER['PHP_SELF']);
     <hr class="m-0">
 
     <!-- CONTENEDOR INFERIOR -->
-    <div class="d-flex flex-grow-1">
+    <div class="d-flex vh-100">
 
         <!-- MENÚ LATERAL -->
-        <div>
+        <div class="">
             <ul class="nav flex-column h-100">
                 <li class="nav-item">
                     <a class="nav-link" href="#">Citas</a>
@@ -308,6 +308,6 @@ header("Location: " . $_SERVER['PHP_SELF']);
         </div>
     </div>
 </div>
-<script src="../JavaScript/Interfaz.js"></script>
+<script src="../../JavaScript/Interfaz.js"></script>
 </body>
   </html>
