@@ -52,7 +52,7 @@ public function VerificarCi($Verificar=null): string{
         $Verificar
     ]);
      if ($statement->fetchColumn()) {
-        return "El ci ya esta en usoooooooo";
+        return "El ci no ya esta en uso";
     }
     return "";
 
@@ -185,6 +185,19 @@ public function BuscarUsuarios(string $busqueda): array
     ]);
 
     return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function VerificarGmail(): String{
+      $conexion = new Conexion();
+    $pdo = $conexion->establecer_conexion();
+     $sql = "SELECT 1 FROM usuario WHERE Mail= ?";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([$this->Mail]);
+     if ($statement->fetchColumn()) {
+        return "";
+    }
+    return " No se encontro el mail";
+
 }
 
 

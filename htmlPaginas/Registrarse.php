@@ -26,7 +26,7 @@ $VerificacionLogin=$Login->VerificarUsuario();
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
- $_SESSION["NombreDeUsuario"] = $Login->getUsername();
+ $_SESSION["Nombre"] = $Login->getUsername();
     $_SESSION["Rol"] = $Usuario->getRol();
     $Usuario->AltaUsuario();
     $Login->AltaLogin($Ci);
@@ -45,7 +45,8 @@ header("Location: index.php");
   <link rel="stylesheet" href="../css/Registrarse.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  <title>Inicio a Sesión</title>
+  <title>Registrarse</title>
+   <link rel="icon" type="image/png" href="../archivos.img/LogoTransparente.png">
 </head>
 
 <body>

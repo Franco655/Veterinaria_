@@ -1,24 +1,23 @@
   <?php
 require_once "../../php/config.php";
-require_once "../../php/Usuario.php";
-require_once "../../php/Login.php";
-VerificarAdministrador();
+require_once "../../php/Mascota.php";
+VerificarSesion();
 
 
-$usuario = new Usuario();
+$Mascota= new Mascota();
 $busqueda = $_GET["Busqueda"] ?? "";
 if ($busqueda != "") {
-    $usuarios = $usuario->BuscarUsuarios($busqueda);
+    $Mascotas = $Mascota->BuscarMascota($busqueda);
 } else {
-    $usuarios = $usuario->ListarUsuario();
+    $Mascotas = $Mascota->ListarMascota();
 }
 
 if (isset($_POST['boton'])) {
-$Ci=($_POST['Ci']);
-$Usuario= new Usuario($Ci);
-$UsuarioConsulta=$Usuario->ConsultarUsuario();
-$_SESSION["Usuario"]=$UsuarioConsulta;
-header("Location: ModificarUsuario.php");
+$Id=($_POST['Id']);
+$Mascota= new Mascota($Id);
+$MascotaConsulta=$Mascota->ConsultarMascota();
+$_SESSION["Mascota"]=$MascotaConsulta;
+header("Location:  ModificarMascota.php");
   }
 if (isset($_POST['botonClose'])) {
 CerrarSesion();
@@ -26,8 +25,8 @@ CerrarSesion();
     exit();
 }
 if (isset($_POST['botonDelete'])) {
-$Ci=($_POST['CiDelete']);
-$Usuario= new Usuario($Ci);
+$Id=($_POST['IdDelete']);
+$Usuario= new Usuario($Id);
 $Usuario->EliminarUsuario();
 header("Location: " . $_SERVER['PHP_SELF']);
 
@@ -47,7 +46,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="../../css/interfaz.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <title>Usuarios</title>
+    <title>Mascotas</title>
     <link rel="icon" type="image/png" href="../../archivos.img/LogoTransparente.png">
   </head>
 <body class="d-flex flex-column vh-100"
@@ -101,14 +100,14 @@ header("Location: " . $_SERVER['PHP_SELF']);
 
      <!-- TÍTULO -->
         <div class="col-12 d-flex justify-content-center align-items-center">
-            <h2>Usuarios</h2>
+            <h2>Mascotas</h2>
         </div>
   </section>
     <!-- TERCERA FILA -->
     <form  method="get" class="row align-items-center">
 
 <section class="col-3">
-    <a class="btn btn-primary" href="./ListarUsuario.php">Limpiar</a>
+    <a class="btn btn-primary" href="./ListarMascota.php">Limpiar</a>
 </section>
 
     <!-- BÚSQUEDA -->
@@ -125,8 +124,8 @@ header("Location: " . $_SERVER['PHP_SELF']);
     <div class="col-12 col-md-3 text-md-end">
         <a
             class="btn btn-success"
-            href="AltaUsuario.php">
-            Agregar Usuario
+            href="./AltaMascota.php">
+            Agregar Mascota
         </a>
     </div>
 
@@ -163,7 +162,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
                 </li>
                 <?php if($_SESSION["Rol"]==="Administrador"){?>
                 <li class="nav-item">
-                    <a class="nav-link" href="./ListarUsuario.php">Usuarios</a>
+                    <a class="nav-link" href="../Usuario/ListarUsuario.php">Usuarios</a>
                 </li>
                 <?php } ?>
             </ul>
@@ -177,40 +176,38 @@ header("Location: " . $_SERVER['PHP_SELF']);
 
         <thead class="table-dark">
             <tr>
-                <th>CI</th>
-                <th>Nombre</th>
-                <th>Nombre de usuario</th>
-                <th>Apellido</th>
-                <th>Mail</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Rol</th>
-                <th>Modificar</th>
+                <th>Id de la mascota</th>
+                <th>Ci del dueño</th>
+                <th>Nombre de la mascota</th>
+                <th>Nombre de la mascota</th>
+                <th>Fecha de nacimiento</th>
+                <th>Castrado</th>
+                <th>Peso</th>
+                 <th>Modificar</th>
                 <th>Eliminar</th>
             </tr>
         </thead>
 
         <tbody>
 
-          <?php foreach ($usuarios as $usuario): ?>
+          <?php foreach ($Mascotas as $Mascota): ?>
 
     <tr>
+        <td><?= htmlspecialchars($Mascota["Id"]) ?></td>
+        <td><?= htmlspecialchars($Mascota["Ci"]) ?></td>
+        <td><?= htmlspecialchars($Mascota["Nombre"]) ?></td>
+        <td><?= htmlspecialchars($Mascota["Dueño"]) ?></td>
+        <td><?= htmlspecialchars($Mascota["FechaNacimiento"]) ?></td>
+        <td><?= $Mascota["Castrado"] == 1 ? "Sí" : "No" ?></td>
+        <td><?= htmlspecialchars($Mascota["Peso"]) ?></td>
 
-        <td><?= htmlspecialchars($usuario["Ci"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Nombre"]) ?></td>
-        <td><?= htmlspecialchars($usuario["NombreDeUsuario"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Apellido"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Mail"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Direccion"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Telefono"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Rol"]) ?></td>
 
         <td>
             <form action="" method="post">
 
                 <input type="hidden"
-                       name="Ci"
-                       value="<?= htmlspecialchars($usuario["Ci"]) ?>">
+                       name="Id"
+                       value="<?= htmlspecialchars($Mascota["Id"]) ?>">
 
                 <button type="submit" name="boton" class="btn btn-primary justify-content-center">Modificar</button>
 
@@ -222,9 +219,9 @@ header("Location: " . $_SERVER['PHP_SELF']);
         class="btn btn-danger"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
-        data-ci="<?= htmlspecialchars($usuario['Ci'], ENT_QUOTES, 'UTF-8') ?>"
-        data-nombre="<?= htmlspecialchars($usuario['Nombre'], ENT_QUOTES, 'UTF-8') ?>">
-        Eliminar Usuario
+        data-ci="<?= htmlspecialchars($Mascota['Id'], ENT_QUOTES, 'UTF-8') ?>"
+        data-nombre="<?= htmlspecialchars($Mascota['Nombre'], ENT_QUOTES, 'UTF-8') ?>">
+        Eliminar Mascota
     </button>
 </td>
 
@@ -247,7 +244,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
 
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    Eliminar usuario
+                    Eliminar Mascota
                 </h5>
 
                 <button type="button" class="btn-close"
@@ -267,7 +264,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
                 </button>
 
                 <form action="" method="POST">
-    <input name="CiDelete" type="hidden" id="CiDelete">
+    <input name="IdDelete" type="hidden" id="CiDelete">
 
     <button name="botonDelete" type="submit" class="btn btn-danger">
         Eliminar

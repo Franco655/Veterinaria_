@@ -1,34 +1,43 @@
+
   <?php
 require_once "../../php/config.php";
-require_once "../../php/Usuario.php";
-require_once "../../php/Login.php";
-VerificarAdministrador();
+require_once "../../php/Socio.php";
 
-
-$usuario = new Usuario();
-$busqueda = $_GET["Busqueda"] ?? "";
-if ($busqueda != "") {
-    $usuarios = $usuario->BuscarUsuarios($busqueda);
-} else {
-    $usuarios = $usuario->ListarUsuario();
+if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"]==="Usuario") {
+    header("Location: ../index.php");
+    exit();
 }
 
+
+$Socio = new Socio();
+$busqueda = $_GET["Busqueda"] ?? "";
+$Filtro=$_GET["Filtro"]??"";
+if ($busqueda != "" || $Filtro!=="") {
+    $Socios = $Socio->BuscarSocios($busqueda, $Filtro);
+} else {
+    $Socios = $Socio->ListarSocio();
+}
+
+
+
+
 if (isset($_POST['boton'])) {
-$Ci=($_POST['Ci']);
-$Usuario= new Usuario($Ci);
-$UsuarioConsulta=$Usuario->ConsultarUsuario();
-$_SESSION["Usuario"]=$UsuarioConsulta;
-header("Location: ModificarUsuario.php");
+$IdMembresia=($_POST['IdMembresia']);
+$Socio= new Socio($IdMembresia);
+$SocioConsulta=$Socio->ConsultarSocio();
+$_SESSION["Socio"]=$SocioConsulta;
+header("Location: ModificarSocio.php");
   }
 if (isset($_POST['botonClose'])) {
-CerrarSesion();
+  CerrarSesion();
    header("Location: ../index.php");
     exit();
 }
 if (isset($_POST['botonDelete'])) {
-$Ci=($_POST['CiDelete']);
-$Usuario= new Usuario($Ci);
-$Usuario->EliminarUsuario();
+
+$IdMembresia=($_POST['IdDelete']);
+$Socio= new Socio($IdMembresia);
+$Socio->EliminarSocio();
 header("Location: " . $_SERVER['PHP_SELF']);
 
 }
@@ -47,7 +56,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="../../css/interfaz.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <title>Usuarios</title>
+    <title>Socios</title>
     <link rel="icon" type="image/png" href="../../archivos.img/LogoTransparente.png">
   </head>
 <body class="d-flex flex-column vh-100"
@@ -101,39 +110,122 @@ header("Location: " . $_SERVER['PHP_SELF']);
 
      <!-- TÍTULO -->
         <div class="col-12 d-flex justify-content-center align-items-center">
-            <h2>Usuarios</h2>
+            <h2>Socios</h2>
         </div>
   </section>
     <!-- TERCERA FILA -->
-    <form  method="get" class="row align-items-center">
 
-<section class="col-3">
-    <a class="btn btn-primary" href="./ListarUsuario.php">Limpiar</a>
-</section>
+<form method="get" class="row align-items-center mb-3">
+
+    <!-- LIMPIAR -->
+    <section class="col-3">
+        <a class="btn btn-primary" href="./ListarSocio.php">Limpiar</a>
+
+        <!-- DROPDOWN -->
+       <div class="dropdown d-inline-block">
+
+    <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false" data-bs-auto-close="false">
+        Opciones
+    </button>
+
+    <ul class="dropdown-menu p-3 bg-dark text-white">
+
+        <li>
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="Filtro"
+                    value=""
+                    id="indefinido"
+                    checked>
+
+                <label class="form-check-label" for="indefinido">
+                    (Indefinido)
+                </label>
+            </div>
+        </li>
+
+        <li>
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="Filtro"
+                    value="Cerca"
+
+                    id="cerca">
+
+                <label class="form-check-label" for="cerca">
+                    Más cerca de vencimiento
+                </label>
+            </div>
+        </li>
+
+        <li>
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="Filtro"
+                    value="Lejos";
+                    id="lejos">
+
+                <label class="form-check-label" for="lejos">
+                    Más lejos de vencimiento
+                </label>
+            </div>
+        </li>
+
+        <li>
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="Filtro"
+                    value="Vencidos"
+                    id="vencidos">
+
+                <label class="form-check-label" for="vencidos">
+                    Ya vencidos
+                </label>
+            </div>
+        </li>
+
+    </ul>
+</div>
+    </section>
 
     <!-- BÚSQUEDA -->
     <div class="col-12 col-md-6 mb-2 mb-md-0">
         <div class="input-group mx-auto" style="max-width: 450px;">
-            <input   type="search" name="Busqueda" class="form-control" placeholder="Buscar..." value="<?= htmlspecialchars($_GET["busqueda"] ?? "", ENT_QUOTES, 'UTF-8') ?>">
+            <input
+                type="search"
+                name="Busqueda"
+                class="form-control"
+                placeholder="Buscar..."
+                value="<?= htmlspecialchars($_GET["busqueda"] ?? "", ENT_QUOTES, 'UTF-8') ?>">
+
             <button type="submit" class="btn btn-primary">
                 Buscar
             </button>
         </div>
     </div>
 
-    <!-- AGREGAR USUARIO -->
+    <!-- AGREGAR SOCIO -->
     <div class="col-12 col-md-3 text-md-end">
         <a
             class="btn btn-success"
-            href="AltaUsuario.php">
-            Agregar Usuario
+            href="AltaSocio.php">
+            Agregar Socio
         </a>
     </div>
 
 </form>
-
-</header>
-
 
 
 
@@ -153,7 +245,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
                     <a class="nav-link" href="#">Ventas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../Socio/ListarSocio.php">Membresías</a>
+                    <a class="nav-link" href="./ListarSocio.php">Membresías</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../Mascota/ListarMascota.php">Mascotas</a>
@@ -163,7 +255,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
                 </li>
                 <?php if($_SESSION["Rol"]==="Administrador"){?>
                 <li class="nav-item">
-                    <a class="nav-link" href="./ListarUsuario.php">Usuarios</a>
+                    <a class="nav-link" href="../Usuario/ListarUsuario.php">Usuarios</a>
                 </li>
                 <?php } ?>
             </ul>
@@ -177,42 +269,40 @@ header("Location: " . $_SERVER['PHP_SELF']);
 
         <thead class="table-dark">
             <tr>
-                <th>CI</th>
+                <th>Id de membresia</th>
+                <th>Ci</th>
                 <th>Nombre</th>
-                <th>Nombre de usuario</th>
                 <th>Apellido</th>
-                <th>Mail</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Rol</th>
-                <th>Modificar</th>
+                <th>Fecha de pago</th>
+                <th>Fecha de cierre</th>
+                 <th>Modificar</th>
                 <th>Eliminar</th>
             </tr>
         </thead>
 
         <tbody>
 
-          <?php foreach ($usuarios as $usuario): ?>
+          <?php foreach ($Socios as $Socio): ?>
 
     <tr>
 
-        <td><?= htmlspecialchars($usuario["Ci"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Nombre"]) ?></td>
-        <td><?= htmlspecialchars($usuario["NombreDeUsuario"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Apellido"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Mail"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Direccion"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Telefono"]) ?></td>
-        <td><?= htmlspecialchars($usuario["Rol"]) ?></td>
+        <td><?= htmlspecialchars($Socio["IdMembresia"]) ?></td>
+        <td><?= htmlspecialchars($Socio["Ci"]) ?></td>
+        <td><?= htmlspecialchars($Socio["Nombre"]) ?></td>
+        <td><?= htmlspecialchars($Socio["Apellido"]) ?></td>
+        <td><?= htmlspecialchars($Socio["FechaDePago"]) ?></td>
+       <td class="<?= new DateTime($Socio["FechaDeCierre"]) < new DateTime() ? 'text-danger' : '' ?>">
+    <?= htmlspecialchars($Socio["FechaDeCierre"]) ?>
+</td>
 
         <td>
             <form action="" method="post">
 
                 <input type="hidden"
-                       name="Ci"
-                       value="<?= htmlspecialchars($usuario["Ci"]) ?>">
+                       name="IdMembresia"
+                       value="<?= htmlspecialchars($Socio["IdMembresia"])?>">
 
-                <button type="submit" name="boton" class="btn btn-primary justify-content-center">Modificar</button>
+                <button type="submit" name="boton" class="btn btn-primary justify-content-center">Actualizar membresia</button>
 
             </form>
         </td>
@@ -222,9 +312,9 @@ header("Location: " . $_SERVER['PHP_SELF']);
         class="btn btn-danger"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
-        data-ci="<?= htmlspecialchars($usuario['Ci'], ENT_QUOTES, 'UTF-8') ?>"
-        data-nombre="<?= htmlspecialchars($usuario['Nombre'], ENT_QUOTES, 'UTF-8') ?>">
-        Eliminar Usuario
+        data-ci="<?= htmlspecialchars($Socio['IdMembresia'], ENT_QUOTES, 'UTF-8') ?>"
+        data-nombre="<?= htmlspecialchars($Socio['Nombre'], ENT_QUOTES, 'UTF-8') ?>">
+        Eliminar Socio
     </button>
 </td>
 
@@ -267,7 +357,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
                 </button>
 
                 <form action="" method="POST">
-    <input name="CiDelete" type="hidden" id="CiDelete">
+    <input name="IdDelete" type="hidden" id="CiDelete">
 
     <button name="botonDelete" type="submit" class="btn btn-danger">
         Eliminar

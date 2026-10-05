@@ -2,29 +2,7 @@
 <?php
  require_once "../php/config.php";
 if (isset($_POST['botonClose'])) {
-    // 1. Asegurar que la sesión esté iniciada para poder destruirla
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-
-    // 2. Limpiar las variables en memoria
-    $_SESSION = [];
-
-    // 3. Destruir la cookie en el navegador (Usando el método moderno)
-    if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(session_name(), '', [
-            'expires' => time() - 3600,
-            'path' => $params["path"],
-            'domain' => $params["domain"],
-            'secure' => $params["secure"],
-            'httponly' => $params["httponly"],
-            'samesite' => 'Strict'
-        ]);
-    }
-    // 4. Destruir la sesión en el servidor
-    session_destroy();
-    // 5. Redirigir para evitar que el usuario recargue la página y reenvíe el formulario
+  CerrarSesion();
    header("Location: index.php");
     exit();
 }
@@ -40,6 +18,7 @@ if (isset($_POST['botonClose'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <title>Veterinaria Maldonado</title>
+     <link rel="icon" type="image/png" href="../archivos.img/LogoTransparente.png">
   </head>
   <body>
 

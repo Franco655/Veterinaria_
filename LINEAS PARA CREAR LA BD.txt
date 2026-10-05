@@ -26,9 +26,23 @@ ON UPDATE CASCADE
 ON DELETE CASCADE;
 
 
+CREATE TABLE Socio ( IdMembresia INT PRIMARY KEY AUTO_INCREMENT, fechaDePago DATE, FechaDeCierre DATE, CiUsuario VARCHAR(8), CONSTRAINT fk_CiUsuarioSocio FOREIGN KEY (CiUsuario) REFERENCES usuario(Ci) ON UPDATE CASCADE ON DELETE CASCADE );
 
 
-
+CREATE TABLE Mascota (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(100),
+    Raza VARCHAR(50),
+    FechaNacimiento DATE,
+    Castrado BOOLEAN,
+    Peso FLOAT,
+    CiUsuario VARCHAR(8),
+    CONSTRAINT fk_CiUsuarioAnimal
+        FOREIGN KEY (CiUsuario)
+        REFERENCES usuario(Ci)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
 
 
 
