@@ -150,6 +150,12 @@ unset($_SESSION["MensajeToast"]);
                 <li class="nav-item">
                     <a class="nav-link" href="#">Alertas</a>
                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="../Producto/ListarProducto.php">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Proveedor</a>
+                </li>
                 <?php if($_SESSION["Rol"]==="Administrador"){?>
                 <li class="nav-item">
                     <a class="nav-link" href="./ListarUsuario.php">Usuarios</a>

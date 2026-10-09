@@ -26,8 +26,8 @@ CerrarSesion();
 }
 if (isset($_POST['botonDelete'])) {
 $Id=($_POST['IdDelete']);
-$Usuario= new Usuario($Id);
-$Usuario->EliminarUsuario();
+$Mascota= new Mascota($Id);
+$Mascota->EliminarMascota();
 header("Location: " . $_SERVER['PHP_SELF']);
 
 }
@@ -179,7 +179,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
                 <th>Id de la mascota</th>
                 <th>Ci del dueño</th>
                 <th>Nombre de la mascota</th>
-                <th>Nombre de la mascota</th>
+                <th>Nombre del dueño</th>
                 <th>Fecha de nacimiento</th>
                 <th>Castrado</th>
                 <th>Peso</th>
@@ -235,7 +235,7 @@ header("Location: " . $_SERVER['PHP_SELF']);
 </div>
         </main>
 
-   <!-- Modal para eliminar usuario -->
+   <!-- Modal para eliminar mascota -->
 <div class="modal fade" id="exampleModal" tabindex="-1"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
 

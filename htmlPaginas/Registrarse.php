@@ -1,6 +1,6 @@
 <?php
  require_once "../php/config.php";
-require_once "../php/LogicaUsuario.php";
+require_once "../php/Usuario.php";
 require_once "../php/Login.php";
   if (isset($_POST['boton'])) {
     $Ci=($_POST['Ci']);

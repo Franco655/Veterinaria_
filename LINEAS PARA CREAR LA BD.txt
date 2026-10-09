@@ -44,5 +44,55 @@ CREATE TABLE Mascota (
         ON DELETE CASCADE
 );
 
+CREATE TABLE proveedor(
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(75),
+    Telefono VARCHAR(25)
+);
+
+CREATE TABLE producto(
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion VARCHAR(255),
+    Precio DECIMAL(10,2) NOT NULL,
+    Stock INT NOT NULL,
+    Tipo VARCHAR(50),
+    Marca VARCHAR(50),
+    FechaVencimiento DATE,
+    IdProveedor INT,
+
+    CONSTRAINT fk_IdProveedor
+        FOREIGN KEY (IdProveedor)
+        REFERENCES proveedor(Id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
 
 
+CREATE TABLE imagen (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Ruta VARCHAR(500) NOT NULL,
+    Tipo VARCHAR(50),
+    FechaSubida DATETIME DEFAULT CURRENT_TIMESTAMP,
+    IdProducto INT NOT NULL,
+
+    CONSTRAINT fk_ImagenProducto
+        FOREIGN KEY (IdProducto)
+        REFERENCES producto(Id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE factura(
+      IdFactura INT AUTO_INCREMENT PRIMARY KEY,
+    Fecha date,
+    PrecioFinal float,
+    TipoDePago varchar(30),
+    Hora time,
+    NombreEmpresa varchar(100),
+    RUT varchar(20)
+
+
+    );
+
+BUSCAR DOMPDF

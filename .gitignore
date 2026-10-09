@@ -1,0 +1,7 @@
+gitignore
+# Variables y contraseñas privadas
+.env
+.env.*
+
+# Dependencias de Composer
+/vendor/

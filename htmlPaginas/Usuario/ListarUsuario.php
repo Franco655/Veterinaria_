@@ -4,14 +4,9 @@ require_once "../../php/Usuario.php";
 require_once "../../php/Login.php";
 VerificarAdministrador();
 
-
-$usuario = new Usuario();
+$Usuario = new Usuario();
 $busqueda = $_GET["Busqueda"] ?? "";
-if ($busqueda != "") {
-    $usuarios = $usuario->BuscarUsuarios($busqueda);
-} else {
-    $usuarios = $usuario->ListarUsuario();
-}
+$usuarios = $Usuario->ListarUsuario($busqueda);
 
 if (isset($_POST['boton'])) {
 $Ci=($_POST['Ci']);
@@ -160,6 +155,12 @@ header("Location: " . $_SERVER['PHP_SELF']);
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Alertas</a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="../Producto/ListarProducto.php">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Proveedor</a>
                 </li>
                 <?php if($_SESSION["Rol"]==="Administrador"){?>
                 <li class="nav-item">

@@ -52,7 +52,7 @@ public function VerificarCi($Verificar=null): string{
         $Verificar
     ]);
      if ($statement->fetchColumn()) {
-        return "El ci no ya esta en uso";
+        return "El ci no esta en uso";
     }
     return "";
 
@@ -66,30 +66,7 @@ public function VerificarCi($Verificar=null): string{
     }
     return "";
 }
-public function ListarUsuario(){
 
-    $conexion = new Conexion();
-    $pdo = $conexion->establecer_conexion();
-
-    $sql = "SELECT
-            usuario.Ci,
-            usuario.Nombre,
-            usuario.Apellido,
-            usuario.Mail,
-            usuario.Direccion,
-            usuario.Telefono,
-            usuario.Rol,
-            login.NombreDeUsuario
-        FROM usuario
-        INNER JOIN login ON usuario.Ci = login.CiUsuario";
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-
-    $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    return $usuarios;
-}
 
 public function ConsultarUsuario(){
 
@@ -150,7 +127,20 @@ $conexion = new Conexion();
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$this->Ci]);
 }
-public function BuscarUsuarios(string $busqueda): array
+
+public function VerificarGmail(): bool{
+      $conexion = new Conexion();
+    $pdo = $conexion->establecer_conexion();
+     $sql = "SELECT 1 FROM usuario WHERE Mail= ?";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([$this->Mail]);
+     if ($statement->fetchColumn()) {
+        return true;
+    }
+    return false;
+}
+
+public function ListarUsuario(string $busqueda = ""): array
 {
     $conexion = new Conexion();
     $pdo = $conexion->establecer_conexion();
@@ -159,45 +149,51 @@ public function BuscarUsuarios(string $busqueda): array
                 usuario.Ci,
                 usuario.Nombre,
                 usuario.Apellido,
-                usuario.Direccion,
                 usuario.Mail,
+                usuario.Direccion,
                 usuario.Telefono,
                 usuario.Rol,
                 login.NombreDeUsuario
             FROM usuario
-            INNER JOIN login ON usuario.Ci = login.CiUsuario
-            WHERE usuario.Ci LIKE :busquedaCi
-               OR usuario.Nombre LIKE :busquedaNombre
-               OR usuario.Apellido LIKE :busquedaApellido
-               OR usuario.Mail LIKE :busquedaMail
-               OR login.NombreDeUsuario LIKE :busquedaUsuario";
+            INNER JOIN login ON usuario.Ci = login.CiUsuario";
 
-    $statement = $pdo->prepare($sql);
+    if ($busqueda != "") {
 
-    $texto = "%" . $busqueda . "%";
+        $sql .= " WHERE usuario.Ci LIKE :busquedaCi
+                  OR usuario.Nombre LIKE :busquedaNombre
+                  OR usuario.Apellido LIKE :busquedaApellido
+                  OR usuario.Mail LIKE :busquedaMail
+                  OR login.NombreDeUsuario LIKE :busquedaUsuario";
 
-    $statement->execute([
-        ":busquedaCi" => $texto,
-        ":busquedaNombre" => $texto,
-        ":busquedaApellido" => $texto,
-        ":busquedaMail" => $texto,
-        ":busquedaUsuario" => $texto
-    ]);
+        $texto = "%" . $busqueda . "%";
 
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->execute([
+            ":busquedaCi" => $texto,
+            ":busquedaNombre" => $texto,
+            ":busquedaApellido" => $texto,
+            ":busquedaMail" => $texto,
+            ":busquedaUsuario" => $texto
+        ]);
+
+    } else {
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+    }
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-public function VerificarGmail(): String{
-      $conexion = new Conexion();
+public function CambiarContrasena(string $NuevaContrasena): void
+{
+    $conexion = new Conexion();
     $pdo = $conexion->establecer_conexion();
-     $sql = "SELECT 1 FROM usuario WHERE Mail= ?";
-    $statement = $pdo->prepare($sql);
-    $statement->execute([$this->Mail]);
-     if ($statement->fetchColumn()) {
-        return "";
-    }
-    return " No se encontro el mail";
 
+    $sql = "UPDATE login SET Contrasena = ? WHERE CiUsuario = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$NuevaContrasena, $this->Ci]);
 }
 
 

@@ -146,4 +146,54 @@ $sql = "SELECT Id, Raza, Nombre, FechaNacimiento, Castrado, Peso FROM mascota WH
 
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+
+public function ListarProducto(string $busqueda = ""): array
+{
+    $conexion = new Conexion();
+    $pdo = $conexion->establecer_conexion();
+
+    $sql = "SELECT
+                producto.Id,
+                producto.Nombre,
+                producto.Descripcion,
+                producto.Precio,
+                producto.Stock,
+                producto.Tipo,
+                producto.Marca,
+                producto.FechaVencimiento,
+                proveedor.Id AS IdProveedor,
+                proveedor.Nombre AS NombreProveedor
+            FROM producto
+            INNER JOIN proveedor
+                ON producto.IdProveedor = proveedor.Id";
+
+    if ($busqueda != "") {
+        $sql .= " WHERE producto.Id LIKE ?
+                  OR producto.Nombre LIKE ?
+                  OR producto.Descripcion LIKE ?
+                  OR producto.Tipo LIKE ?
+                  OR producto.Marca LIKE ?
+                  OR proveedor.Id LIKE ?
+                  OR proveedor.Nombre LIKE ?";
+
+        $busqueda = "%$busqueda%";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            $busqueda,
+            $busqueda,
+            $busqueda,
+            $busqueda,
+            $busqueda,
+            $busqueda,
+            $busqueda
+        ]);
+    } else {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+    }
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
