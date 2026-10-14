@@ -21,6 +21,15 @@ $VerificacionLogin=$Login->VerificarUsuario();
 
 
    if ($Verificacion !== "" || $VerificacionLogin !== "") {
+     $_SESSION["DatosRegistro"] = [
+       "Ci" => $Ci,
+       "Nombre" => $Nombre,
+       "Apellido" => $Apellido,
+       "Mail" => $Mail,
+       "Direccion" => $Direccion,
+       "Telefono" => $Telefono,
+       "NombreDeUsuario" => $UsserName
+     ];
      $_SESSION["MensajeLogin"] = $VerificacionLogin;
     $_SESSION["Mensaje"] = $Verificacion;
     header("Location: " . $_SERVER['PHP_SELF']);
@@ -35,6 +44,8 @@ $VerificacionLogin=$Login->VerificarUsuario();
 header("Location: index.php");
     exit();
   }
+  $DatosRegistro = $_SESSION["DatosRegistro"] ?? [];
+  unset($_SESSION["DatosRegistro"]);
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,35 +85,35 @@ header("Location: index.php");
 <?php } ?>
       <div class="col-md-6">
         <label for="InputNombre" class="form-label">Nombre</label>
-         <input name="Nombre" type="text" class="form-control" id="InputNombre" required>
+         <input name="Nombre" type="text" class="form-control" id="InputNombre" value="<?= htmlspecialchars($DatosRegistro["Nombre"] ?? "", ENT_QUOTES, 'UTF-8') ?>" required>
 
       </div>
       <div class="col-md-6">
         <label for="InputApellido" class="form-label">Apellido</label>
-        <input name="Apellido" type="text" class="form-control" id="InputApellido" required>
+        <input name="Apellido" type="text" class="form-control" id="InputApellido" value="<?= htmlspecialchars($DatosRegistro["Apellido"] ?? "", ENT_QUOTES, 'UTF-8') ?>" required>
       </div>
       <div class="col-6">
         <label for="InputMail" class="form-label">Mail</label>
-        <input name="Mail" type="email" class="form-control" id="InputMail" required>
+        <input name="Mail" type="email" class="form-control" id="InputMail" value="<?= htmlspecialchars($DatosRegistro["Mail"] ?? "", ENT_QUOTES, 'UTF-8') ?>" required>
       </div>
       <div class="col-6">
         <label for="InputTel" class="form-label">Telefóno</label>
-        <input name="Telefono" type="number" class="form-control" id="InputTel" required>
+        <input name="Telefono" type="number" class="form-control" id="InputTel" value="<?= htmlspecialchars($DatosRegistro["Telefono"] ?? "", ENT_QUOTES, 'UTF-8') ?>" required>
       </div>
       <div class="col-6">
         <label for="InpuCi" class="form-label">Cedula</label>
-        <input name="Ci" type="number" class="form-control" id="InputCi" required>
+        <input name="Ci" type="number" class="form-control" id="InputCi" value="<?= htmlspecialchars($DatosRegistro["Ci"] ?? "", ENT_QUOTES, 'UTF-8') ?>" required>
       </div>
       <div class="col-6">
         <label for="InputDireccion" class="form-label">Dirección</label>
-        <input name="Direccion" type="text" class="form-control" id="InputDireccion" required>
+        <input name="Direccion" type="text" class="form-control" id="InputDireccion" value="<?= htmlspecialchars($DatosRegistro["Direccion"] ?? "", ENT_QUOTES, 'UTF-8') ?>" required>
       </div>
       <div class="col-12">
       <h3>Información de Usuario</h3>
       </div>
       <div class="col-md-6">
         <label for="InputUsuario" class="form-label">Nombre de Usuario</label>
-        <input name="NombreDeUsuario" type="text" class="form-control" id="InputUsuario" required>
+        <input name="NombreDeUsuario" type="text" class="form-control" id="InputUsuario" value="<?= htmlspecialchars($DatosRegistro["NombreDeUsuario"] ?? "", ENT_QUOTES, 'UTF-8') ?>" required>
       </div>
        <div class="col-6">
         <label for="InputContrasena" class="form-label">Contraseña</label>

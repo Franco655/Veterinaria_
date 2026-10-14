@@ -95,4 +95,46 @@ CREATE TABLE factura(
 
     );
 
+
+
+
+CREATE TABLE cita (
+    IdCita INT AUTO_INCREMENT PRIMARY KEY,
+    Fecha DATE NOT NULL,
+    Hora TIME NOT NULL,
+    Estado VARCHAR(20) NOT NULL DEFAULT 'Pendiente',
+    Motivo VARCHAR(500),
+    Activo BOOLEAN NOT NULL DEFAULT TRUE,
+    CiUsuario VARCHAR(8) NOT NULL,
+    IdMascota INT NOT NULL,
+
+    CONSTRAINT fk_cita_usuario
+        FOREIGN KEY (CiUsuario)
+        REFERENCES usuario(Ci)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_cita_mascota
+        FOREIGN KEY (IdMascota)
+        REFERENCES mascota(Id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+
+CREATE TABLE vacunas (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(60),
+    FechaDeVacunacion DATE,
+    FechaDeVencimiento DATE,
+    IdMascota INT,
+
+    CONSTRAINT fk_Vacunas_Mascota
+        FOREIGN KEY (IdMascota)
+        REFERENCES mascota(Id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+
 BUSCAR DOMPDF

@@ -104,7 +104,46 @@ class Login
     ]);
 }
 
+public function ConsultarUsuario(){
 
+    $conexion = new Conexion();
+    $pdo = $conexion->establecer_conexion();
+
+    $sql = "SELECT
+            usuario.Ci,
+            usuario.Nombre,
+            usuario.Apellido,
+            usuario.Direccion,
+            usuario.Mail,
+            usuario.Telefono,
+            usuario.Rol,
+            login.NombreDeUsuario
+        FROM usuario
+        INNER JOIN login
+            ON usuario.Ci = login.CiUsuario
+        WHERE login.NombreDeUsuario = ?";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$this->username]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public function ConsultarCIporUsuario(){
+
+    $conexion = new Conexion();
+    $pdo = $conexion->establecer_conexion();
+
+    $sql = "SELECT usuario.Ci
+            FROM usuario
+            INNER JOIN login ON usuario.Ci = login.CiUsuario
+            WHERE login.NombreDeUsuario = ?";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$this->username]);
+
+    return $stmt->fetchColumn();
+}
     //GETTERS
     public function getUsername(): string
     {

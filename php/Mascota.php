@@ -106,6 +106,17 @@ public function BuscarMascota(string $busqueda): array
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$this->Id]);
 }
+
+public function EliminarMascotaUsuario(string $ciUsuario): bool
+{
+    $conexion = new Conexion();
+    $pdo = $conexion->establecer_conexion();
+    $sql = "DELETE FROM mascota WHERE Id = ? AND CiUsuario = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$this->Id, $ciUsuario]);
+
+    return $stmt->rowCount() === 1;
+}
 public function ModificarMascota( string $Ci)
 {
     $conexion = new Conexion();
@@ -193,6 +204,26 @@ public function ListarProducto(string $busqueda = ""): array
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
     }
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+public function ListarMascotasPorCI(string $CiUsuario){
+
+    $conexion = new Conexion();
+    $pdo = $conexion->establecer_conexion();
+
+    $sql = "SELECT
+                Id,
+                Raza,
+                Nombre,
+                FechaNacimiento,
+                Castrado,
+                Peso
+            FROM mascota
+            WHERE CiUsuario = ?";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$CiUsuario]);
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

@@ -73,6 +73,20 @@ if (isset($_POST['botonClose'])) {
             </a>
         </li>
 
+         <li>
+            <a class="dropdown-item" href="./PanelDeUsuario.php">
+                Panel de usuario
+            </a>
+        </li>
+
+        <?php if ($_SESSION["Rol"] === "Usuario"){ ?>
+            <li>
+                <a class="dropdown-item" href="./PanelDeUsuario.php">
+                    Mi panel
+                </a>
+            </li>
+        <?php } ?>
+
         <?php if ($_SESSION["Rol"] === "Empleado" || $_SESSION["Rol"] === "Administrador"){ ?>
 
             <li>

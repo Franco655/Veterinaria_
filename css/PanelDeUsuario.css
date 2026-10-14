@@ -1,0 +1,307 @@
+/* Fondo y tipografía base del panel. */
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f5f8f5;
+  font-family: Arial, sans-serif;
+}
+
+/* Fondo claro para que el logo negro con transparencia conserve su contraste. */
+.PanelHeader {
+  background: linear-gradient(110deg, #e8f3ec, #f5f8f5);
+  box-shadow: 0 4px 16px rgba(24, 74, 56, 0.12);
+}
+
+/* Mantiene el logo y los botones alineados con espacio cómodo en cualquier pantalla. */
+.PanelHeaderContent {
+  min-height: 92px;
+  padding: 12px clamp(16px, 5vw, 64px);
+  gap: 20px;
+}
+
+/* Esta área no tiene color de fondo: se conserva la transparencia del logo. */
+.PanelHeaderBrand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  min-height: 64px;
+  padding: 4px 0;
+}
+
+.PanelHeaderLogo {
+  display: block;
+  width: 150px;
+  max-width: 100%;
+  height: 52px;
+  object-fit: contain;
+}
+
+/* Agrupa las acciones y las separa del logo. */
+.PanelHeaderActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-left: auto;
+}
+
+/* Identifica visualmente al usuario conectado sin competir con los botones. */
+.PanelHeaderUser {
+  color: #176b50;
+  font-weight: 600;
+}
+
+/* Tarjetas principales del panel: una por cada tipo de información. */
+.DashboardCard {
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e3eee7;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(24, 74, 56, 0.08);
+}
+
+.DashboardCardHeading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #edf3ef;
+}
+
+.DashboardIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  font-size: 1.35rem;
+}
+
+.DashboardIconPets {
+  background-color: #e8f5ed;
+}
+
+.DashboardIconAppointments {
+  background-color: #e8f1fb;
+}
+
+.DashboardIconVaccines {
+  background-color: #fff4d6;
+}
+
+.DashboardListItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid #edf3ef;
+}
+
+.DashboardListItem:last-child {
+  border-bottom: 0;
+}
+
+.EmptyState {
+  margin: 24px 0 0;
+  padding: 18px;
+  color: #65736b;
+  text-align: center;
+  background-color: #f7faf8;
+  border-radius: 12px;
+}
+
+/* Contenedor y presentación de la pantalla de perfil. */
+.PerfilContainer {
+  max-width: 980px;
+  padding-top: 42px;
+  padding-bottom: 56px;
+}
+
+.PerfilIntro {
+  margin-bottom: 28px;
+}
+
+.PerfilMainHeader {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 0 30px;
+  border-bottom: 1px solid #dcebe1;
+}
+
+.PerfilAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 700;
+  background: #176b50;
+  border-radius: 50%;
+  box-shadow: 0 5px 14px rgba(23, 107, 80, 0.25);
+}
+
+.PerfilEyebrow {
+  color: #176b50;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.PerfilName {
+  color: #18372c;
+}
+
+.PerfilUsername {
+  color: #65736b;
+}
+
+.PerfilRole {
+  margin-left: auto;
+  padding: 7px 14px;
+  color: #176b50;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: #d8eddf;
+  border-radius: 999px;
+}
+
+.PerfilDetails {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  padding: 12px 0 0;
+}
+
+.PerfilDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 19px 0;
+  border-bottom: 1px solid #edf3ef;
+}
+
+.PerfilDetailLabel {
+  color: #65736b;
+  font-size: 0.83rem;
+  font-weight: 600;
+}
+
+.PerfilDetailValue {
+  color: #18372c;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.PerfilActions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 22px 0 0;
+}
+
+.PerfilEditButton {
+  padding: 11px 22px;
+  color: #fff;
+  font-weight: 700;
+  background: #176b50;
+  border: 1px solid #176b50;
+  border-radius: 999px;
+}
+
+.PerfilEditButton:hover,
+.PerfilEditButton:focus-visible {
+  color: #fff;
+  background: #12543e;
+  border-color: #12543e;
+}
+
+.PerfilNotice {
+  display: none;
+  margin: 18px 0 0;
+  padding: 14px 18px;
+  color: #65736b;
+  text-align: center;
+  background: #f7faf8;
+  border-radius: 12px;
+}
+
+.PerfilNotice:target {
+  display: block;
+}
+
+/* Estilo compartido para los botones de tienda y usuario. */
+.PanelHeaderButton {
+  padding: 11px 20px;
+  color: #fff;
+  font-weight: 600;
+  background-color: #176b50;
+  border: 1px solid #176b50;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(13, 55, 39, 0.14);
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.PanelHeaderButton:hover,
+.PanelHeaderButton:focus-visible {
+  color: #fff;
+  background-color: #12543e;
+  border-color: #12543e;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+  .PanelHeaderContent {
+    min-height: 78px;
+    padding-inline: 12px;
+    gap: 8px;
+  }
+
+  .PanelHeaderBrand {
+    min-width: 0;
+    min-height: 48px;
+  }
+
+  .PanelHeaderLogo {
+    width: 90px;
+    height: 40px;
+  }
+
+  .PanelHeaderActions {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .PanelHeaderButton {
+    padding: 8px 9px;
+    font-size: 0.82rem;
+  }
+
+  .PerfilMainHeader {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .PerfilRole {
+    margin-left: 0;
+  }
+
+  .PerfilDetails {
+    grid-template-columns: 1fr;
+  }
+
+  .PerfilActions {
+    justify-content: stretch;
+  }
+
+  .PerfilEditButton {
+    width: 100%;
+    text-align: center;
+  }
+}

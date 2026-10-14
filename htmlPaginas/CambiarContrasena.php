@@ -1,29 +1,40 @@
 <?php
   require_once "../php/config.php";
   require_once "../php/Login.php";
+   require_once "../php/Usuario.php";
+
+if (!isset($_SESSION["CodigoVerificado"]) || $_SESSION["CodigoVerificado"] !== true) {
+    header("Location: InicioSesion.php");
+    exit();
+}
   if (isset($_POST['boton'])) {
     $Ci = ($_POST['Ci']);
     $NuevaContrasena = ($_POST['NuevaContrasena']);
-    $ConfirmarContrasena = ($_POST['Contrasena']);
-    $Usuario= new Usuario($Ci);
-    $Validar=$Usuario->VerificarCi();
-    if ($Validar){
+   $ConfirmarContrasena = ($_POST['Contrasena']);
         if ($NuevaContrasena === $ConfirmarContrasena) {
-            $Usuario->CambiarContrasena($NuevaContrasena);
-            $_SESSION["MensajeValidar"] = "Contraseña cambiada exitosamente";
-            header("Location: " . $_SERVER['PHP_SELF']);
+            $Usuario= new Usuario($Ci, null, null,$_SESSION["Mail"]);
+    $Validar=$Usuario->VerificarCi();
+            if ($Validar) {
+                $Validar=$Usuario->CambiarContrasena($NuevaContrasena);
+                if($Validar===false){
+                    $_SESSION["MensajeValidar"] = "El ci no coincide con el mail";
+                    header("Location: " . $_SERVER['PHP_SELF']);
+                    exit();
+                }
+                  unset($_SESSION["CodigoVerificado"]);
+            unset($_SESSION["Mail"]);
+            header("Location: InicioSesion.php");
             exit();
+            }else{
+                $_SESSION["MensajeValidar"] = "No se encontro el ci";
+              header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+            }
         } else {
             $_SESSION["MensajeValidar"] = "Las contraseñas no coinciden";
               header("Location: " . $_SERVER['PHP_SELF']);
             exit();
         }
-    } else {
-        $_SESSION["MensajeValidar"] = "El ci no esta en uso";
-          header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
-    }
-
   }
   ?>
 

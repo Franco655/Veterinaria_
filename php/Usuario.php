@@ -120,6 +120,40 @@ $stmt->execute([
 ]);
 }
 
+public function ModificarPerfil(string $Ci): void
+{
+$conexion = new Conexion();
+$pdo = $conexion->establecer_conexion();
+$sql = "UPDATE usuario
+        SET Nombre = ?,
+            Apellido = ?,
+            Direccion = ?,
+            Mail = ?,
+            Telefono = ?
+        WHERE Ci = ?";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute([
+    $this->Nombre,
+    $this->Apellido,
+    $this->Direccion,
+    $this->Mail,
+    $this->Telefono,
+    $Ci
+]);
+}
+
+public function VerificarMail(string $CiActual): string
+{
+$conexion = new Conexion();
+$pdo = $conexion->establecer_conexion();
+$sql = "SELECT 1 FROM usuario WHERE Mail = ? AND Ci != ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$this->Mail, $CiActual]);
+
+return $stmt->fetchColumn() ? "El correo electrónico ya está en uso" : "";
+}
+
 public function EliminarUsuario(){
 $conexion = new Conexion();
     $pdo = $conexion->establecer_conexion();
@@ -186,14 +220,29 @@ public function ListarUsuario(string $busqueda = ""): array
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-public function CambiarContrasena(string $NuevaContrasena): void
+public function CambiarContrasena(string $NuevaContrasena): bool
 {
-    $conexion = new Conexion();
-    $pdo = $conexion->establecer_conexion();
+try{
 
-    $sql = "UPDATE login SET Contrasena = ? WHERE CiUsuario = ?";
+ $conexion = new Conexion();
+    $pdo = $conexion->establecer_conexion();
+    $NuevaContrasena = password_hash($NuevaContrasena, PASSWORD_DEFAULT);
+   $sql = "UPDATE login
+        INNER JOIN usuario ON login.CiUsuario = usuario.Ci
+        SET login.`Contraseña` = ?
+        WHERE login.CiUsuario = ? AND usuario.Mail = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$NuevaContrasena, $this->Ci]);
+    $stmt->execute([$NuevaContrasena,
+    $this->Ci,
+    $this->Mail
+    ]);
+
+return true;
+} catch (PDOException $e) {
+        // Opcional: Puedes registrar el error en un log (error_log($e->getMessage());)
+        return false;
+    }
+
 }
 
 

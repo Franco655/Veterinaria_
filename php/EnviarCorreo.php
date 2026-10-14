@@ -36,6 +36,7 @@ function EnviarCorreo(string $destinatario, string $codigo): bool
 
         // Contenido del correo
         $mail->isHTML(true);
+        $mail->CharSet = 'UTF-8';
         $mail->Subject = 'Código de recuperación de contraseña';
         $mail->Body = "
             <h1>Recuperación de contraseña</h1>

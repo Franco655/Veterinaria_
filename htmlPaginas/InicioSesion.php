@@ -12,6 +12,7 @@ $Rol = $Validar->Validar();
 if ($Rol !== "") {
     $_SESSION["Rol"] = $Rol;
     $_SESSION["Nombre"] = $Nombre;
+    $_SESSION["Ci"] = $Validar->ConsultarCIporUsuario();
 
     header("Location: index.php");
     exit();
