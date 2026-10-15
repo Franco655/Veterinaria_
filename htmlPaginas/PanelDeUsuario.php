@@ -88,8 +88,17 @@ if (isset($_POST["agregar_cita"])) {
     $mensajePanel = "La fecha de la cita no puede ser anterior a hoy.";
     $tipoMensajePanel = "danger";
   } else {
-    $citaNueva = new Cita();
-    if ($citaNueva->AltaCitaUsuario($ciUsuario, $idMascota, $fecha, $hora, $motivo)) {
+    $fechaCita = DateTime::createFromFormat("Y-m-d", $fecha);
+    $citaNueva = new Cita(
+      null,
+      $fechaCita ?: null,
+      "Pendiente",
+      $motivo,
+      true,
+      $hora
+    );
+
+    if ($fechaCita !== false && $citaNueva->AltaCita($ciUsuario, $idMascota)) {
       $_SESSION["MensajePanel"] = "Cita solicitada correctamente.";
       header("Location: " . $_SERVER["PHP_SELF"]);
       exit();
@@ -107,7 +116,7 @@ if (isset($_POST["eliminar_cita"])) {
 
   if ($idCita !== false && $idCita !== null) {
     $citaEliminar = new Cita($idCita);
-    if ($citaEliminar->EliminarCitaUsuario($ciUsuario)) {
+    if ($citaEliminar->EliminarCita($ciUsuario)) {
       $_SESSION["MensajePanel"] = "Cita eliminada correctamente.";
     } else {
       $_SESSION["MensajePanel"] = "No se pudo eliminar la cita.";

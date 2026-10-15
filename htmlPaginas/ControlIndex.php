@@ -113,7 +113,7 @@ if (!isset($_SESSION["Nombre"], $_SESSION["Rol"]) || $_SESSION["Rol"]=== "Usuari
         <div>
             <ul class="nav flex-column h-100">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Citas</a>
+                    <a class="nav-link" href="./Cita/ListarCita.php">Citas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Ventas</a>

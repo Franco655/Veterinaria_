@@ -137,4 +137,19 @@ CREATE TABLE vacunas (
 );
 
 
+CREATE TABLE historial (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nota VARCHAR(300),
+    NotaMensaje TEXT,
+    CantidadEnvios INT DEFAULT 0,
+    diasDenvioProximo int,
+    IdMascota INT,
+
+    CONSTRAINT fk_historial_mascota
+        FOREIGN KEY (IdMascota)
+        REFERENCES mascota(Id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
 BUSCAR DOMPDF
